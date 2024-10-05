@@ -1,0 +1,12 @@
+<Page x:Class="NEGOSUD.UI.ClientsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="ClientsPage">
+
+    <Grid Background="LightGray">
+        <TextBlock Text="Bienvenue sur la page des clients !"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="24"/>
+    </Grid>
+</Page>
