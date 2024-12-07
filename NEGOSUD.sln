@@ -1,34 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8A355F15-0507-49AD-9A1C-BB1794166BF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEGOSUD", "NEGOSUD.csproj", "{4C00C768-0809-408D-9E5B-B7912AC96277}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9CA11AA6-F95F-4875-9719-2627CF70CB5E} = {9CA11AA6-F95F-4875-9719-2627CF70CB5E}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEGOSUD.UI", "src\NEGOSUD.UI\NEGOSUD.UI.csproj", "{D3C28DD1-FF8A-4416-8F2A-12CC0E2CBED0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiNegosud", "..\ApiNegosud\ApiNegosud.csproj", "{792F9CAB-04C2-4553-A5A4-2A649218BF15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEGOSUD.Core", "src\NEGOSUD.Core\NEGOSUD.Core.csproj", "{642B7AE7-B311-4BC5-B8B7-96A1BFB8398E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegosudLibrary", "..\NegosudLibrary\NegosudLibrary.csproj", "{9CA11AA6-F95F-4875-9719-2627CF70CB5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C00C768-0809-408D-9E5B-B7912AC96277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C00C768-0809-408D-9E5B-B7912AC96277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C00C768-0809-408D-9E5B-B7912AC96277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C00C768-0809-408D-9E5B-B7912AC96277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792F9CAB-04C2-4553-A5A4-2A649218BF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792F9CAB-04C2-4553-A5A4-2A649218BF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792F9CAB-04C2-4553-A5A4-2A649218BF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792F9CAB-04C2-4553-A5A4-2A649218BF15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CA11AA6-F95F-4875-9719-2627CF70CB5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CA11AA6-F95F-4875-9719-2627CF70CB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CA11AA6-F95F-4875-9719-2627CF70CB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CA11AA6-F95F-4875-9719-2627CF70CB5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3C28DD1-FF8A-4416-8F2A-12CC0E2CBED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3C28DD1-FF8A-4416-8F2A-12CC0E2CBED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3C28DD1-FF8A-4416-8F2A-12CC0E2CBED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3C28DD1-FF8A-4416-8F2A-12CC0E2CBED0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{642B7AE7-B311-4BC5-B8B7-96A1BFB8398E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{642B7AE7-B311-4BC5-B8B7-96A1BFB8398E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{642B7AE7-B311-4BC5-B8B7-96A1BFB8398E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{642B7AE7-B311-4BC5-B8B7-96A1BFB8398E}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D3C28DD1-FF8A-4416-8F2A-12CC0E2CBED0} = {8A355F15-0507-49AD-9A1C-BB1794166BF5}
-		{642B7AE7-B311-4BC5-B8B7-96A1BFB8398E} = {8A355F15-0507-49AD-9A1C-BB1794166BF5}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E748C553-C102-40C4-9DA5-BE59D374B60E}
 	EndGlobalSection
 EndGlobal
