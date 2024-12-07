@@ -1,0 +1,23 @@
+# Fichiers de build
+bin/
+obj/
+
+# Packages NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Configuration locale
+.vs/
+*.suo
+*.user
+
+# Fichiers de logs
+*.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Cache de Visual Studio Code
+.vscode/
