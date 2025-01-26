@@ -14,7 +14,7 @@ L'application utilise **C# avec WPF (Windows Presentation Foundation)** pour l'i
 ## 🚀 Installation et configuration
 ### 1️⃣ **Cloner le projet**
 ```bash
-git clone https://github.com/ton-projet/NEGOSUD.git
+git clone https://github.com/Clement-Souil/NEGOSUD.git
 cd NEGOSUD
 ```
 
@@ -31,7 +31,7 @@ CREATE DATABASE negosud_v2;
 Dans `appsettings.json` (dans l'API), modifie la chaîne de connexion :
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Database=negosud_v2;User=root;Password=ton_mot_de_passe;"
+  "DefaultConnection": "Server=localhost;Database=negosud_v2;User=root;Password=;"
 }
 ```
 
@@ -107,7 +107,7 @@ NEGOSUD/
 ---
 
 ## 👥 Contributeurs
-Projet réalisé par **Clément** et son équipe au **CESI**. 🏫
+Projet réalisé par Clément Souil, Nathan Estay et Ilies Fernandez
 
 ---
 
