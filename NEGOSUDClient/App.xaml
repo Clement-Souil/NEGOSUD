@@ -1,0 +1,53 @@
+﻿<Application x:Class="NEGOSUDClient.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:NEGOSUDClient"
+             xmlns:view="clr-namespace:NEGOSUDClient.MVVM.View"
+            xmlns:viewModel="clr-namespace:NEGOSUDClient.MVVM.ViewModels"
+
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewModel:CommandeViewModel}">
+                <view:CommandeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:ListeFournisseurViewModel}">
+                <view:ListeFournisseurView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddFournisseurViewModel}">
+                <view:AddFournisseurView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:UpdateFournisseurViewModel}">
+                <view:UpdateFournisseurView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ArticlesViewModel}">
+                <view:ArticlesView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ListeClientViewModel}">
+                <view:ListeClientView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddClientViewModel}">
+                <view:AddClientView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:UpdateClientViewModel}">
+                <view:UpdateClientView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:InventaireViewModel}">
+                <view:InventaireView/>
+            </DataTemplate>
+
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="assets/Ressources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+         
+    </Application.Resources>
+</Application>

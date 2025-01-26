@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="NEGOSUDClient.MVVM.Templates.CreerCommande"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NEGOSUDClient.MVVM.Templates"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1024" FontFamily="Lato">
+    <Grid Background="White" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Retour et ligne -->
+            <RowDefinition Height="Auto"/>
+            <!-- Formulaire -->
+            <RowDefinition Height="*"/>
+            <!-- Liste des produits -->
+            <RowDefinition Height="Auto"/>
+            <!-- Détails du panier -->
+            <RowDefinition Height="Auto"/>
+            <!-- Bouton Commander -->
+        </Grid.RowDefinitions>
+
+        <!-- Retour -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Height="40" Margin="20,10,0,0" Command="{Binding CloseCommandeCommand}">
+                <Image Source="../../assets/Logo/Navigation/FR.png" Stretch="Uniform" />
+            </Button>
+
+            <Line X1="0" Y1="50" X2="1" Y2="50" Stroke="Gray" StrokeThickness="1" VerticalAlignment="Top" Grid.Column="1" />
+        </Grid>
+
+        <!-- Formulaire client et produit -->
+        <Grid Grid.Row="1" Margin="0,20,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Client -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Employé" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="0" Grid.Column="0" Margin="10,30,10,1" Height="40" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" Grid.ColumnSpan="2" ItemsSource="{Binding ListeUser}" 
+                 SelectedItem="{Binding SelectedUser}" 
+                 DisplayMemberPath="Nom" />
+
+            <!-- Fournisseur -->
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="Fournisseur" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="0" Grid.Column="3" Margin="10,30,10,1" Height="40" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" Grid.ColumnSpan="2" ItemsSource="{Binding ListeFournisseur}" 
+                 SelectedItem="{Binding SelectedFournisseur}" 
+                 DisplayMemberPath="NomDomaine" />
+            
+            <!-- Articles -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Articles" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="1" Grid.Column="0" Margin="10,30,10,10" Height="40" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" Grid.ColumnSpan="2" ItemsSource="{Binding ListeArticle}" 
+                SelectedItem="{Binding SelectedArticle}" 
+                DisplayMemberPath="Nom" />
+
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="Quantité" FontSize="14" FontWeight="Bold" Margin="100,10,100,10" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <TextBox Text="{Binding QuantiteInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1" Grid.Column="2" Margin="1,30,1,0" Height="38" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" />
+
+            <Button Grid.Row="1" Grid.Column="3" Margin="25,30,25,10" Content="Ajouter" Background="#FFCDD2" Height="40" Grid.ColumnSpan="2" Command="{Binding AjouterArticleCommand}" />
+        </Grid>
+
+        <Border Grid.Row="2" Margin="10" Background="#F0F0F0" Padding="10" CornerRadius="5" BorderBrush="Gray" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <!-- En-tête -->
+                    <RowDefinition Height="*" />
+                    <!-- Liste des articles -->
+                </Grid.RowDefinitions>
+
+                <!-- En-tête du tableau -->
+                <Grid Grid.Row="0" Background="#D0D0D0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border BorderThickness="1,1,1,1" BorderBrush="Gray">
+                        <TextBlock Text="Articles" FontWeight="Bold" Padding="5" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" BorderThickness="1,1,1,1" BorderBrush="Gray">
+                        <TextBlock Text="Prix Unitaire (€)" FontWeight="Bold" Padding="5" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="2" BorderThickness="1,1,1,1" BorderBrush="Gray">
+                        <TextBlock Text="Quantité" FontWeight="Bold" Padding="5" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="3" BorderThickness="1,1,1,1" BorderBrush="Gray">
+                        <TextBlock Text="Total (€)" FontWeight="Bold" Padding="5" HorizontalAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Contenu dynamique -->
+                <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Background="White" MinHeight="100">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding LigneCommande}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="1,1,1,1" BorderBrush="Gray">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="1*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Article.Nom}" Grid.Column="0" Padding="8"/>
+                                            <TextBlock Text="{Binding Article.PrixAchat, StringFormat=N2}" Grid.Column="1" Padding="8" HorizontalAlignment="Center"/>
+                                            <TextBox Text="{Binding Quantite}" IsReadOnly="True" Grid.Column="2" Width="100" Height="30" Background="White" BorderBrush="Gray" BorderThickness="1"/>
+                                            <TextBlock Text="{Binding Prix, StringFormat=N2}" Grid.Column="3" Padding="8" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </Border>
+
+
+        <!-- Détails du panier -->
+        <Grid Grid.Row="3" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Prix :" FontSize="16" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding PrixTotal, StringFormat={}{0:N2} €}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Livraison :" FontSize="16" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FraisLivraison,StringFormat={}{0:N2} €}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Taxes :" FontSize="16" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Taxes,StringFormat={}{0:N2} €}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" />
+
+            <Line Grid.Row="3" Grid.ColumnSpan="2" X1="0" Y1="0" X2="1" Y2="0" Stroke="Gray" StrokeThickness="1" VerticalAlignment="Bottom" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Total :" FontSize="20" FontWeight="Bold" VerticalAlignment="Top" Margin="0,5,0,0" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding TotalCommande, StringFormat={}{0:N2} €}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,5,0,0" />
+        </Grid>
+
+        <!-- Bouton Commander -->
+        <Button Grid.Row="4" Content="Commander" Background="#C71585" Foreground="White" FontSize="18" Height="50" Width="150" HorizontalAlignment="Right" Margin="0,10,0,0" Command="{Binding ValidateCommand}"/>
+
+    </Grid>
+</UserControl>

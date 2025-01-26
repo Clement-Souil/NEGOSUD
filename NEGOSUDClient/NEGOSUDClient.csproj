@@ -1,0 +1,112 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="assets\Logo\Etat_Livraison\404.png" />
+    <None Remove="assets\Logo\Etat_Livraison\Annule.png" />
+    <None Remove="assets\Logo\Etat_Livraison\Encours.png" />
+    <None Remove="assets\Logo\Etat_Livraison\Livre.png" />
+    <None Remove="assets\Logo\Etat_Paiement\404.png" />
+    <None Remove="assets\Logo\Etat_Paiement\Annule.png" />
+    <None Remove="assets\Logo\Etat_Paiement\Paye.png" />
+    <None Remove="assets\Logo\LogoNEGOSUD.png" />
+    <None Remove="assets\Logo\Logo_Delete_Detail\check.png" />
+    <None Remove="assets\Logo\Logo_Delete_Detail\detail.png" />
+    <None Remove="assets\Logo\Logo_Delete_Detail\poubelle.png" />
+    <None Remove="assets\Logo\Logo_Menu\Client.png" />
+    <None Remove="assets\Logo\Logo_Menu\Commande.png" />
+    <None Remove="assets\Logo\Logo_Menu\Fournisseur.png" />
+    <None Remove="assets\Logo\Logo_Menu\Produit.png" />
+    <None Remove="assets\Logo\Logo_Menu\Stock.png" />
+    <None Remove="assets\Logo\Navigation\FR.png" />
+    <None Remove="assets\Logo\Navigation\FS.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NegosudLibrary\NegosudLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\Logo\Etat_Livraison\404.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Etat_Livraison\Annule.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Etat_Livraison\Encours.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Etat_Livraison\Livre.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Etat_Paiement\404.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Etat_Paiement\Annule.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Etat_Paiement\Paye.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\LogoNEGOSUD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Delete_Detail\check.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Delete_Detail\detail.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Delete_Detail\poubelle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Menu\Client.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Menu\Commande.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Menu\Fournisseur.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Menu\Produit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Menu\Stock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Navigation\FR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Navigation\FS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
