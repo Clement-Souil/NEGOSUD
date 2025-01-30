@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NEGOSUDClient.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" FontFamily="Lato">
     <UserControl.Resources>
         <!-- Style global pour toute la page -->
         <Style TargetType="TextBlock">
@@ -58,17 +58,16 @@
                 <!-- Bouton aligné à droite -->
                 <!-- Bouton de fond -->
                 <Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
-                    <!--Bouton-->
-                    <Button Background="#FCE4EC" 
+                                <!--Bouton-->
+                    <Button Background="#FCE4EC"
                     BorderBrush="Transparent"
-                        Command="{Binding EnregistrerCommand}"/>
-
-                    <!--Texte par-dessus le bouton car visiblement, 
-            dans le bouton impossible de s'afficher correctement-->
-                    <TextBlock Text="Confirmer" 
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center" 
-                       Foreground="#B61E4F"/>
+                    Foreground="#B61E4F"
+                    Command="{Binding EnregistrerCommand}"
+                    Grid.Column="1"
+                    Width="150"
+                    Height="35"
+                    Cursor="Hand"
+                    Content="Confirmer"/>
                 </Grid>
 
             </Grid>
