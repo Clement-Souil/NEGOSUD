@@ -57,19 +57,32 @@
 
                 <!-- Bouton aligné à droite -->
                 <!-- Bouton de fond -->
-                <Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
-                    <!--Bouton-->
+                <!--<Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
+                    --><!--Bouton--><!--
                     <Button Background="#FCE4EC" 
                         BorderBrush="Transparent"
                             Command="{Binding AddFournisseurCommand}"/>
 
-                    <!--Texte par-dessus le bouton car visiblement, 
-                dans le bouton impossible de s'afficher correctement-->
+                    --><!--Texte par-dessus le bouton car visiblement, 
+                dans le bouton impossible de s'afficher correctement--><!--
                     <TextBlock Text="+ Nouveau Fournisseur" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center" 
                            Foreground="#B61E4F"/>
+                Modifié par Clément le 30/01/2025 
+                </Grid>-->
+                <Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
+                    <!--Bouton-->
+                    <Button Background="#FCE4EC"
+                    BorderBrush="Transparent"
+                    Command="{Binding AddFournisseurCommand}"
+                    Grid.Column="1"
+                    Width="150"
+                    Height="35"
+                    Cursor="Hand"
+                    Content="+ Nouveau Fournisseurs"/>   
                 </Grid>
+
 
             </Grid>
 

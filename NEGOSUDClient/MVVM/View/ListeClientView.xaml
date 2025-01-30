@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NEGOSUDClient.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"  FontFamily="Lato">
     <UserControl.Resources>
         <!-- Style global pour toute la page -->
-        <Style TargetType="TextBlock">
+        <Style TargetType="TextBlock" >
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
         <!-- Style spécifique pour les titres -->
         <Style x:Key="TitleStyle" TargetType="TextBlock">
@@ -21,6 +21,7 @@
         <Style x:Key="BoldStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+
         <Style x:Key="BottomButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -57,19 +58,31 @@
 
                 <!-- Bouton aligné à droite -->
                 <!-- Bouton de fond -->
-                <Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
-                    <!--Bouton-->
+                <!--<Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
+                    --><!--Bouton--><!--
                     <Button Background="#FCE4EC" 
                     BorderBrush="Transparent"
                         Command="{Binding AddUserCommand}"/>
 
-                    <!--Texte par-dessus le bouton car visiblement, 
-            dans le bouton impossible de s'afficher correctement-->
+                    --><!--Texte par-dessus le bouton car visiblement, 
+            dans le bouton impossible de s'afficher correctement--><!--
                     <TextBlock Text="+ Nouveau Clients" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center" 
                        Foreground="#B61E4F"/>
-                </Grid>
+                Modifié par Clément le 30/01/2025 
+                </Grid>-->
+                <Grid Grid.Column="1" Width="150" Height="35" Cursor="Hand">
+                    <!--Bouton-->
+                    <Button Background="#FCE4EC"
+                        BorderBrush="Transparent"
+                        Command="{Binding AddUserCommand}"
+                        Grid.Column="1"
+                        Width="150"
+                        Height="35"
+                        Cursor="Hand"
+                        Content="+ Nouveau Clients"/>    
+                 </Grid>
 
             </Grid>
 
@@ -85,6 +98,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- En-têtes -->
