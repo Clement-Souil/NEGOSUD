@@ -19,6 +19,7 @@
     <None Remove="assets\Logo\LogoNEGOSUD.png" />
     <None Remove="assets\Logo\Logo_Delete_Detail\check.png" />
     <None Remove="assets\Logo\Logo_Delete_Detail\detail.png" />
+    <None Remove="assets\Logo\Logo_Delete_Detail\modify.png" />
     <None Remove="assets\Logo\Logo_Delete_Detail\poubelle.png" />
     <None Remove="assets\Logo\Logo_Menu\Client.png" />
     <None Remove="assets\Logo\Logo_Menu\Commande.png" />
@@ -81,6 +82,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="assets\Logo\Logo_Delete_Detail\detail.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\Logo\Logo_Delete_Detail\modify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="assets\Logo\Logo_Delete_Detail\poubelle.png">

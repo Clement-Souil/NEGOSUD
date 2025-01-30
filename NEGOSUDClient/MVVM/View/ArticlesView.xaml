@@ -103,8 +103,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding Article.Nom}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="0" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.Famille}" Margin="10,0" Grid.Column="1" VerticalAlignment="Center"/>
@@ -112,9 +112,23 @@
                                     <TextBlock Text="{Binding Article.Volume}" Width="80"  Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.Quantite}" Width="80"  Margin="10,0" Grid.Column="4" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.PrixVente}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <Button x:Name="btnDetails" Command="{Binding ClickDetailsCommand}" Content="Détails" Margin="2 2" Grid.Column="6" Style="{StaticResource RoundedButtonStyle}"/>
+                                    <!--<Button x:Name="btnDetails" Command="{Binding ClickDetailsCommand}" Content="Détails" Margin="2 2" Grid.Column="6" Style="{StaticResource RoundedButtonStyle}"/>-->
+                                    
+                                    <!-- Boutons placés directement dans la grille / Modifié par Clément le 30/01/2025 -->
+                                    <Grid Grid.Column="7" HorizontalAlignment="Right">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" x:Name="btnDetails" Command="{Binding ClickDetailsCommand}"  Width="30" Height="30" Margin="5,0">
+                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/detail.png" Width="16" Height="16"/>
+                                        </Button>
+                                        <!--<Button x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Content="Supprimer" Margin="2 2" Grid.Column="7" Style="{StaticResource RoundedButtonStyle}"/>-->
+                                        <Button Grid.Column="1" x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Width="30" Height="30" Margin="5,0">
+                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16"/>
+                                        </Button>
+                                    </Grid>
 
-                                    <Button x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Content="Supprimer" Margin="2 2" Grid.Column="7" Style="{StaticResource RoundedButtonStyle}"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

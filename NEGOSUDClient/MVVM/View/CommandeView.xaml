@@ -92,6 +92,7 @@
                     </Grid>
 
                     <!-- Contenu du tableau -->
+                    <!-- Contenu du tableau -->
                     <ItemsControl ItemsSource="{Binding ListeCommande}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -103,32 +104,54 @@
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <!-- Colonne ajustée pour les boutons -->
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Commande.Id, StringFormat=# {0}}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="0" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding Commande.Date, StringFormat={}{0:dd/MM/yyyy}}" Margin="10,0" Grid.Column="1" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding Commande.UserNom}" Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Commande.StatutCommande}" Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Commande.PrixTotal, StringFormat={}{0} €}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="4" VerticalAlignment="Center"/>
 
-                                    <!-- Boutons avec commandes -->
+                                    <TextBlock Text="{Binding Commande.Id, StringFormat=# {0}}" 
+                                                Style="{StaticResource BoldStyle}" Margin="10,0" 
+                                                Grid.Column="0" VerticalAlignment="Center" />
 
-                                    <StackPanel Orientation="Horizontal" Grid.Column="5" HorizontalAlignment="Center">
-                                        <Button Cursor="Hand" Command="{Binding ClickSupprimerCommande}">
-                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16" Margin="5,0"/>
+                                    <TextBlock Text="{Binding Commande.Date, StringFormat={}{0:dd/MM/yyyy}}" 
+                                                Margin="10,0" Grid.Column="1" VerticalAlignment="Center" />
+
+                                    <TextBlock Text="{Binding Commande.UserNom}" 
+                                                Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="{Binding Commande.StatutCommande}" 
+                                                Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="{Binding Commande.PrixTotal, StringFormat={}{0} €}" 
+                                               Style="{StaticResource BoldStyle}" Margin="10,0" 
+                                               Grid.Column="4" VerticalAlignment="Center"/>
+
+                                    <!-- Boutons placés directement dans la grille / Modifié par Clément le 30/01/2025 -->
+                                    <Grid Grid.Column="5" HorizontalAlignment="Right">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0" Cursor="Hand" Command="{Binding ClickVoirDetailsCommande}" 
+                                                Width="30" Height="30" Margin="5,0">
+                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/detail.png" Width="16" Height="16" />
                                         </Button>
-                                        <Button Cursor="Hand" Command="{Binding ClickVoirDetailsCommande}">
-                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/detail.png" Width="16" Height="16" Margin="5,0"/>
+                                        <Button Grid.Column="1" Cursor="Hand" Command="{Binding RecuCommande}" 
+                                                Width="30" Height="30" Margin="5,0">
+                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/check.png" Width="16" Height="16" />
                                         </Button>
-                                        <Button Cursor="Hand" Command="{Binding RecuCommande}">
-                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/check.png" Width="16" Height="16" Margin="5,0"/>
+                                        <Button Grid.Column="2" Cursor="Hand" Command="{Binding ClickSupprimerCommande}" 
+                                                Width="30" Height="30" Margin="5,0">
+                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16" />
                                         </Button>
-                                    </StackPanel>
+                                    </Grid>
 
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+
                 </StackPanel>
             </Border>
 
