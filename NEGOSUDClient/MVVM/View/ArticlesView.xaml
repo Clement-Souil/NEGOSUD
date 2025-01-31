@@ -83,8 +83,8 @@
                         <TextBlock Text="Nom" Margin="10,0" Grid.Column="0" VerticalAlignment="Center"/>
                         <TextBlock Text="Type" Margin="10,0" Grid.Column="1" VerticalAlignment="Center"/>
                         <TextBlock Text="Année" Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
-                        <TextBlock Text="Volume" Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
-                        <TextBlock Text="Quantité" Margin="10,0" Grid.Column="4" VerticalAlignment="Center"/>
+                        <TextBlock Text="Quantité" Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+                        <TextBlock Text="Stock" Margin="10,0" Grid.Column="4" VerticalAlignment="Center"/>
                         <TextBlock Text="Prix" Margin="10,0" Grid.Column="5" VerticalAlignment="Center"/>
 
 
@@ -109,7 +109,7 @@
                                     <TextBlock Text="{Binding Article.Nom}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="0" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.Famille}" Margin="10,0" Grid.Column="1" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.Annee}" Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Article.Volume}" Width="80"  Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Article.Volume, StringFormat={}{0:F2} L}" Width="80"  Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.Quantite}" Width="80"  Margin="10,0" Grid.Column="4" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Article.PrixVente}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!--<Button x:Name="btnDetails" Command="{Binding ClickDetailsCommand}" Content="Détails" Margin="2 2" Grid.Column="6" Style="{StaticResource RoundedButtonStyle}"/>-->
@@ -120,11 +120,11 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Grid.Column="0" x:Name="btnDetails" Command="{Binding ClickDetailsCommand}"  Width="30" Height="30" Margin="5,0">
+                                        <Button Grid.Column="0"  Cursor="Hand" x:Name="btnDetails" Command="{Binding ClickDetailsCommand}"  Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/detail.png" Width="16" Height="16"/>
                                         </Button>
                                         <!--<Button x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Content="Supprimer" Margin="2 2" Grid.Column="7" Style="{StaticResource RoundedButtonStyle}"/>-->
-                                        <Button Grid.Column="1" x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Width="30" Height="30" Margin="5,0">
+                                        <Button Grid.Column="1"  Cursor="Hand" x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16"/>
                                         </Button>
                                     </Grid>
