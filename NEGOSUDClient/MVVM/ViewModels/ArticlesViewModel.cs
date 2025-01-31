@@ -4,9 +4,11 @@ using NEGOSUDClient.Services;
 using NEGOSUDClient.Tools;
 using NegosudLibrary.DAO;
 using NegosudLibrary.DTO;
+using NegosudLibrary.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,46 @@ namespace NEGOSUDClient.MVVM.ViewModels
         public ICommand OpenArticleCreationFormCommand { get; set; }
         public ICommand OpenArticleModificationFormCommand { get; set; }
         public ICommand ValidateCommand { get; set; }
+        public class ArticleViewModel : INotifyPropertyChanged
+        {
+            private int _quantiteReel;
+
+            public int Id { get; set; }
+            public string Nom { get; set; }
+            public string Famille { get; set; }
+            public int Annee { get; set; }
+            public int Quantite { get; set; }  // Valeur d'origine (ne change pas sauf si validé)
+
+            public int QuantiteReel
+            {
+                get => _quantiteReel;
+                set
+                {
+                    if (_quantiteReel != value)
+                    {
+                        _quantiteReel = value;
+                        OnPropertyChanged(nameof(QuantiteReel));
+                    }
+                }
+            }
+
+            // Constructeur : initialise QuantiteReel avec Quantite sans liaison dynamique
+            public ArticleViewModel(int id, string nom, string famille, int annee, int quantite)
+            {
+                Id = id;
+                Nom = nom;
+                Famille = famille;
+                Annee = annee;
+                Quantite = quantite;
+                QuantiteReel = quantite;  // Valeur par défaut = Quantite
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         public Visibility _createUpdateArticleFormVisibility = Visibility.Hidden;
 
@@ -82,6 +124,8 @@ namespace NEGOSUDClient.MVVM.ViewModels
         }
 
         private FournisseurDTO _selectedFournisseur;
+        private UserDTO user;
+
         public FournisseurDTO SelectedFournisseur
         {
             get { return _selectedFournisseur; }
@@ -307,7 +351,8 @@ namespace NEGOSUDClient.MVVM.ViewModels
             {
                 foreach (var art in t.Result)
                 {
-                    var item = new ArticleItemViewModel(art);
+                    //Clément - 31/01/2025 / Ajout du blocages des suppressions pour les employés
+                    var item = new ArticleItemViewModel(art, user);
                     item.openDetails += OpenArticleForm;
                     item.deleted += DeleteArticle;
                     Articles.Add(item);

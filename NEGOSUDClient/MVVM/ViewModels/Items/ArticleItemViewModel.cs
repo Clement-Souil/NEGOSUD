@@ -1,5 +1,7 @@
 ﻿using NEGOSUDClient.MVVM.ViewModels.Base;
+using NEGOSUDClient.Services;
 using NEGOSUDClient.Tools;
+using NegosudLibrary.DAO;
 using NegosudLibrary.DTO;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
     {
 
         public ArticleDTO Article { get; set; }
-
+        public UserDTO User { get; set; }
 
         public ICommand ClickDeleteCommand { get; set; }
         public ICommand ClickDetailsCommand { get; set; }
@@ -23,11 +25,13 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
         public event EventHandler openDetails;
 
 
-        public ArticleItemViewModel(ArticleDTO _article)
+        public ArticleItemViewModel(ArticleDTO _article, UserDTO user)
         {
             Article = _article;
+            User = user;
+
             ClickDetailsCommand = new RelayCommand(OpenDetails);
-            ClickDeleteCommand = new RelayCommand(DeleteArticle);
+            ClickDeleteCommand = new RelayCommand(DeleteArticle, o => { return AuthService.IsAdmin(); }); //Clément - 31/01/2025 / Ajout du blocages des suppressions pour les employés
         }
 
         private void DeleteArticle(object obj)

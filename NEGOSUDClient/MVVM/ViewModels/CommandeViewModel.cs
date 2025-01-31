@@ -47,6 +47,7 @@ public class CommandeViewModel : BaseViewModel
         }
     }
 
+
     private UserDTO _selecteduser;
     public UserDTO SelectedUser
     {
@@ -196,6 +197,8 @@ public class CommandeViewModel : BaseViewModel
     }
 
     private double _totalCommandeDetails;
+    private User user;
+
     public double TotalCommandeDetails
     {
         get { return _totalCommandeDetails; }
@@ -415,19 +418,18 @@ public class CommandeViewModel : BaseViewModel
         {
             foreach (var commandeDto in t.Result)
             {
-                CommandeItemViewModel item = new CommandeItemViewModel(commandeDto);
-
+                //Clément - 31/01/2025 / Ajout du blocages des suppressions pour les employés
+                CommandeItemViewModel item = new CommandeItemViewModel(commandeDto, user);
                 item.voirDetails += OpenDetailForm;
                 item.supprimer += SupprimerCommande;
                 item.ValidateCommandRequested += ValidateCommandRequestedHandler;
                 ListeCommande.Add(item);
-               //ListeCommande.Add(commandeItem);
+
             }
         }, TaskScheduler.FromCurrentSynchronizationContext());
 
 
     }
-
 
 
     private void SupprimerCommande(object? sender, EventArgs e)

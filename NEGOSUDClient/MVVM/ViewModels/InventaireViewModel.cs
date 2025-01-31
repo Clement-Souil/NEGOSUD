@@ -28,6 +28,24 @@ public class InventaireViewModel
         EnregistrerCommand = new RelayCommand(Enregistrer);
     }
 
+    //public void GetAllArticles()
+    //{
+    //    Articles.Clear();
+
+    //    Task.Run(async () =>
+    //    {
+    //        return await HttpClientService.GetArticles();
+    //    })
+    //    .ContinueWith(t =>
+    //    {
+    //        foreach (var article in t.Result)
+    //        {
+    //            Articles.Add(article);
+    //        }
+    //    }, TaskScheduler.FromCurrentSynchronizationContext());
+
+    //}
+
     public void GetAllArticles()
     {
         Articles.Clear();
@@ -40,11 +58,12 @@ public class InventaireViewModel
         {
             foreach (var article in t.Result)
             {
+                article.QuantiteReel = article.Quantite;  // Assigner la valeur par défaut
                 Articles.Add(article);
             }
         }, TaskScheduler.FromCurrentSynchronizationContext());
-
     }
+
 
     public async void Enregistrer(object obj)
     {
@@ -92,7 +111,6 @@ public class InventaireViewModel
 
         OnInventaireWindowRequested();
     }
-
 
     public void OnInventaireWindowRequested()
     {
