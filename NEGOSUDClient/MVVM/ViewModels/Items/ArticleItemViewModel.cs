@@ -22,7 +22,7 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
 
         public event EventHandler deleted;
         public event EventHandler openDetails;
-        public event EventHandler MouvementStockRequested;
+        public event EventHandler<ArticleDTO> MouvementStockRequested;
 
 
 
@@ -57,7 +57,7 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
 
         private void OnMouvementStockRequested(object obj)
         {
-            MouvementStockRequested?.Invoke(this, EventArgs.Empty);
+            MouvementStockRequested?.Invoke(this, Article);
         }
 
 

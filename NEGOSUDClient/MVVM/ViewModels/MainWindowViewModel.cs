@@ -22,7 +22,7 @@ public class MainWindowViewModel : BaseViewModel
 
     private FournisseurDTO _updatedFournisseur;
     private User _updatedUser;
-    private Article _article;
+    private ArticleDTO _article;
 
     // Current viewmodel contient la view actuellememnt injectée dans le main window, on l'encapsule manuellement pour lancer l'évenement
     // OnPropertyChanged lors du set d'un nouveau viewmodel, cela permet de mettre à jour la vue lors du changement du _currentViewModel
@@ -156,8 +156,9 @@ public class MainWindowViewModel : BaseViewModel
     {
         NavigateTo("Commandes");
     }
-    private void MouvementStockRequestedHandler(object? sender, ArticleItemViewModel e)
+    private void MouvementStockRequestedHandler(object? sender, ArticleDTO e)
     {
+        _article = e;
         NavigateTo("MouvementStock");
     }
 

@@ -114,7 +114,7 @@
                     </Grid>
 
                     <!-- Contenu du tableau -->
-                    <ItemsControl ItemsSource="{Binding ListeFournisseur}">
+                    <ItemsControl ItemsSource="{Binding ListMouvementStock}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <!-- Ligne 1 -->
@@ -127,30 +127,17 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="{Binding ArticleReference.Id}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding ArticleReference.Nom}" Margin="10,0" Grid.Column="1" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding ArticleReference.Date}" Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding ArticleReference.Quantite}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding ArticleReference.TypeMouvement}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Id}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding }" Margin="10,0" Grid.Column="1" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Date}" Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Quantite}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TypeMouvementId}" Style="{StaticResource BoldStyle}" Margin="10,0" Grid.Column="4" VerticalAlignment="Center"/>
                                     <!--<StackPanel Grid.Column="5" Orientation="Horizontal">
                                  <Button Content="Modifier" Margin="0,0,10,0" Command="{Binding UpdateCommand}" Style="{StaticResource RoundedButtonStyle}"/>
                                  <Button Content="Supprimer" Command="{Binding DeleteCommand}" Style="{StaticResource RoundedButtonStyle}"/>
                              </StackPanel>-->
                                     <!-- Boutons placés directement dans la grille / Modifié par Clément le 30/01/2025 -->
-                                    <Grid Grid.Column="5" HorizontalAlignment="Right">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Button Grid.Column="0" Cursor="Hand" Command="{Binding UpdateCommand}" Width="30" Height="30" Margin="5,0">
-                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/modify.png" Width="16" Height="16" />
-                                        </Button>
-  
-                                        <Button Grid.Column="1" Cursor="Hand" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="5,0">
-                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16" />
-                                        </Button>
-                                    </Grid>
+                         
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
