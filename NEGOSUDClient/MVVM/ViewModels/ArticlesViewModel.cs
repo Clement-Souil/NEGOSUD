@@ -25,6 +25,8 @@ namespace NEGOSUDClient.MVVM.ViewModels
         public ICommand OpenArticleModificationFormCommand { get; set; }
         public ICommand ValidateCommand { get; set; }
 
+        public event EventHandler<ArticleItemViewModel> MouvementStockRequested;
+
         public Visibility _createUpdateArticleFormVisibility = Visibility.Hidden;
 
         public Visibility CreateUpdateArticleFormVisibility
@@ -308,6 +310,7 @@ namespace NEGOSUDClient.MVVM.ViewModels
                 foreach (var art in t.Result)
                 {
                     var item = new ArticleItemViewModel(art);
+                    item.MouvementStockRequested += MouvementStockRequestedHandler;
                     item.openDetails += OpenArticleForm;
                     item.deleted += DeleteArticle;
                     Articles.Add(item);
@@ -316,6 +319,11 @@ namespace NEGOSUDClient.MVVM.ViewModels
                 }
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void MouvementStockRequestedHandler(object? sender, EventArgs e)
+        {
+            MouvementStockRequested?.Invoke(this, sender as ArticleItemViewModel);
         }
 
         private void DeleteArticle(object? sender, EventArgs e)

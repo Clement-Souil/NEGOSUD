@@ -1,5 +1,6 @@
 ﻿using NEGOSUDClient.MVVM.View;
 using NEGOSUDClient.MVVM.ViewModels.Base;
+using NEGOSUDClient.MVVM.ViewModels.Items;
 using NEGOSUDClient.Tools;
 using NegosudLibrary.DAO;
 using NegosudLibrary.DTO;
@@ -21,6 +22,7 @@ public class MainWindowViewModel : BaseViewModel
 
     private FournisseurDTO _updatedFournisseur;
     private User _updatedUser;
+    private Article _article;
 
     // Current viewmodel contient la view actuellememnt injectée dans le main window, on l'encapsule manuellement pour lancer l'évenement
     // OnPropertyChanged lors du set d'un nouveau viewmodel, cela permet de mettre à jour la vue lors du changement du _currentViewModel
@@ -60,7 +62,9 @@ public class MainWindowViewModel : BaseViewModel
                     CurrentViewModel = commandeViewModel;
                     break;
                 case "Articles":
-                    CurrentViewModel = new ArticlesViewModel();
+                    var articlesViewModel = new ArticlesViewModel();
+                    articlesViewModel.MouvementStockRequested += MouvementStockRequestedHandler;
+                    CurrentViewModel = articlesViewModel;
                     break;
                 case "Clients":
                     var listeClientViewModel = new ListeClientViewModel();
@@ -99,13 +103,14 @@ public class MainWindowViewModel : BaseViewModel
                     inventaireViewModel.InventaireWindowRequested += InventaireWindowRequestedHandler;
                     CurrentViewModel = inventaireViewModel;
                     break;
+                case "MouvementStock":
+                    var mouvementStockViewModel = new MouvementStockViewModel(_article);
+                    mouvementStockViewModel.ReturnToArticleRequested += ReturnToArticleRequestedHandler;
+                    CurrentViewModel = mouvementStockViewModel;
+                    break;
             }
         }
     }
-
-
-
-
 
 
     //EVENT HANDLER
@@ -151,6 +156,15 @@ public class MainWindowViewModel : BaseViewModel
     {
         NavigateTo("Commandes");
     }
+    private void MouvementStockRequestedHandler(object? sender, ArticleItemViewModel e)
+    {
+        NavigateTo("MouvementStock");
+    }
 
+
+    private void ReturnToArticleRequestedHandler(object? sender, EventArgs e)
+    {
+        NavigateTo("Articles");
+    }
 
 }

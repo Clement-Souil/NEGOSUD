@@ -43,6 +43,10 @@
                 <view:InventaireView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:MouvementStockViewModel}">
+                <view:MouvementStockView/>
+            </DataTemplate>
+
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="assets/Ressources/Styles.xaml"/>

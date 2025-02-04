@@ -18,9 +18,12 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
 
         public ICommand ClickDeleteCommand { get; set; }
         public ICommand ClickDetailsCommand { get; set; }
+        public ICommand ClickMouvementStockCommand { get; set; }
 
         public event EventHandler deleted;
         public event EventHandler openDetails;
+        public event EventHandler MouvementStockRequested;
+
 
 
         public ArticleItemViewModel(ArticleDTO _article)
@@ -28,6 +31,7 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
             Article = _article;
             ClickDetailsCommand = new RelayCommand(OpenDetails);
             ClickDeleteCommand = new RelayCommand(DeleteArticle);
+            ClickMouvementStockCommand = new RelayCommand(OnMouvementStockRequested);
         }
 
         private void DeleteArticle(object obj)
@@ -51,7 +55,11 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
             openDetails?.Invoke(sender, EventArgs.Empty);
         }
 
-        
+        private void OnMouvementStockRequested(object obj)
+        {
+            MouvementStockRequested?.Invoke(this, EventArgs.Empty);
+        }
+
 
     }
 }
