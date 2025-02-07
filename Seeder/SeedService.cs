@@ -84,6 +84,8 @@ namespace Seeder
                 context.StatutCommandes.Add(new StatutCommande { Id = 1, Statut = "Passée" });
                 context.StatutCommandes.Add(new StatutCommande { Id = 2, Statut = "En cours" });
                 context.StatutCommandes.Add(new StatutCommande { Id = 3, Statut = "Reçu" });
+                context.StatutCommandes.Add(new StatutCommande { Id = 4, Statut = "En attente fournisseur" });
+                context.StatutCommandes.Add(new StatutCommande { Id = 5, Statut = "Livrée" });
             }
 
             if (!context.FamilleArticles.Any())
@@ -160,7 +162,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 2,
                     FournisseurId = 5,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -176,7 +180,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 2,
                     FournisseurId = 5,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -192,7 +198,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 2,
                     FournisseurId = 4,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -208,7 +216,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 1,
                     FournisseurId = 4,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -224,7 +234,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 1,
                     FournisseurId = 4,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -240,7 +252,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 1,
                     FournisseurId = 4,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -256,7 +270,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 2,
                     FournisseurId = 4,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -272,7 +288,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 2,
                     FournisseurId = 3,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -288,7 +306,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 1,
                     FournisseurId = 3,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -304,7 +324,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 1,
                     FournisseurId = 3,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -320,7 +342,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 3,
                     FournisseurId = 1,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
 
@@ -337,7 +361,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 4,
                     FournisseurId = 2,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 0.75
                 });
 
                 context.Articles.Add(new Article
@@ -353,7 +379,9 @@ namespace Seeder
                     Quantite = 8,
                     FamilleArticleId = 5,
                     FournisseurId = 1,
-                    SeuilReappro = 4
+                    SeuilReappro = 4,
+                    SeuilMinimal = 8,
+                    Volume = 1
                 });
             }
 
