@@ -85,24 +85,19 @@ public class InventaireViewModel
 
                 MouvementStock mouvement = new MouvementStock();
 
-                mouvement.Quantite = delta;
-                mouvement.Date = DateTime.Now;
-                mouvement.ArticleId = newArticle.Id;
+                int quantite = delta;
+                int typeMouvementId;
 
                 if (delta > 0)
                 {
-                    mouvement.TypeMouvementId = 7;
+                    typeMouvementId = 7;
                 }
                 else
                 {
-                    mouvement.TypeMouvementId = 8;
+                    typeMouvementId = 8;
                 }
 
-
-                await HttpClientService.CreateNewMouvementStock(mouvement);
-
-
-
+                MouvementStockService.AddMouvementStock(quantite, newArticle, typeMouvementId);
             }
         }
 
