@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:NEGOSUDClient"
              xmlns:view="clr-namespace:NEGOSUDClient.MVVM.View"
-            xmlns:viewModel="clr-namespace:NEGOSUDClient.MVVM.ViewModels"
+             xmlns:viewModel="clr-namespace:NEGOSUDClient.MVVM.ViewModels"
 
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -18,7 +18,7 @@
             <DataTemplate DataType="{x:Type viewModel:AddFournisseurViewModel}">
                 <view:AddFournisseurView/>
             </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type viewModel:UpdateFournisseurViewModel}">
                 <view:UpdateFournisseurView/>
             </DataTemplate>
@@ -48,6 +48,8 @@
                 <ResourceDictionary Source="assets/Ressources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-         
+
+
+
     </Application.Resources>
 </Application>

@@ -145,9 +145,70 @@ namespace Seeder
                     Email = "paul.lemoine@example.com",
                     RoleId = 3
                 });
+
+                context.Users.Add(new User
+                {
+                    Id = 4,
+                    Nom = "Dupont",
+                    Prenom = "Jean",
+                    Tel = "0601020304",
+                    Mdp = "mdp123",
+                    Adresse = "10 rue de Paris",
+                    Email = "jean.dupont@email.com",
+                    RoleId = 1
+                });
+
+                context.Users.Add(new User
+                {
+                    Id = 5,
+                    Nom = "Martin",
+                    Prenom = "Sophie",
+                    Tel = "0612345678",
+                    Mdp = "mdp456",
+                    Adresse = "5 avenue des Champs",
+                    Email = "sophie.martin@email.com",
+                    RoleId = 1
+                });
+
+                context.Users.Add(new User
+                {
+                    Id = 6,
+                    Nom = "Durand",
+                    Prenom = "Paul",
+                    Tel = "0623456789",
+                    Mdp = "mdp789",
+                    Adresse = "12 boulevard Haussmann",
+                    Email = "paul.durand@email.com",
+                    RoleId = 1
+                });
+
+                context.Users.Add(new User
+                {
+                    Id = 7,
+                    Nom = "Lefevre",
+                    Prenom = "Claire",
+                    Tel = "0634567890",
+                    Mdp = "mdp101",
+                    Adresse = "8 rue Lafayette",
+                    Email = "claire.lefevre@email.com",
+                    RoleId = 1
+                });
+
+                context.Users.Add(new User
+                {
+                    Id = 8,
+                    Nom = "Morel",
+                    Prenom = "Thomas",
+                    Tel = "0645678901",
+                    Mdp = "mdp202",
+                    Adresse = "14 place Bellecour",
+                    Email = "thomas.morel@email.com",
+                    RoleId = 1
+                });
+
             }
 
-                if (!context.Articles.Any())
+            if (!context.Articles.Any())
             {
                 context.Articles.Add(new Article
                 {

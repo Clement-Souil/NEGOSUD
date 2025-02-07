@@ -53,6 +53,9 @@ namespace ApiNegosud.Controllers
                     UserNom = item.User.Nom + " " + item.User.Prenom,
                     StatutCommande = item.StatutCommande.Statut,
 
+                    //Rajout Clément pour gérer les etats de commande
+                    IsClient = item.IsClient
+
                 };
                 commandeDTOs.Add(dto);
 

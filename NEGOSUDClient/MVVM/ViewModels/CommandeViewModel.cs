@@ -385,7 +385,11 @@ public class CommandeViewModel : BaseViewModel
         commandeDAO.StatutCommandeId = 1;
         commandeDAO.FournisseurId = SelectedFournisseur.Id;
 
-            foreach (var ligneCommande in LigneCommande)
+
+        // Transfert de la valeur de la case à cocher dans le modèle
+        commandeDAO.IsClient = IsClientChecked;
+
+        foreach (var ligneCommande in LigneCommande)
             {
                 LigneCommande newLigneCommande = new LigneCommande();
 

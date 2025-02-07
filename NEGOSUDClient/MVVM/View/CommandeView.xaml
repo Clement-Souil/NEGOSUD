@@ -90,12 +90,10 @@
 
                     </Grid>
 
-                    <!-- Contenu du tableau -->
                     <ItemsControl ItemsSource="{Binding ListeCommande}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!-- Ligne 1 -->
-                                <Grid Background="White" Height="40" Margin="0,2">
+                                <Grid Height="40" Margin="0,2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
@@ -103,28 +101,38 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
-                                        <!-- Colonne ajustée pour les boutons -->
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <TextBlock Text="{Binding Commande.Id, StringFormat=# {0}}" 
-                                                Style="{StaticResource BoldStyle}" Margin="10,0" 
-                                                Grid.Column="0" VerticalAlignment="Center" />
 
-                                    <TextBlock Text="{Binding Commande.Date, StringFormat={}{0:dd/MM/yyyy}}" 
-                                                Margin="10,0" Grid.Column="1" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Commande.Id, StringFormat=# {0}}"
+                           Style="{StaticResource BoldStyle}" Margin="10,0" 
+                           Grid.Column="0" VerticalAlignment="Center" />
 
-                                    <TextBlock Text="{Binding Commande.UserNom}" 
-                                                Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Commande.Date, StringFormat={}{0:dd/MM/yyyy}}"
+                           Margin="10,0" Grid.Column="1" VerticalAlignment="Center" />
 
-                                    <TextBlock Text="{Binding Commande.StatutCommande}" 
-                                                Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Commande.UserNom}"
+                           Margin="10,0" Grid.Column="2" VerticalAlignment="Center"/>
 
-                                    <TextBlock Text="{Binding Commande.PrixTotal, StringFormat={}{0} €}" 
-                                               Style="{StaticResource BoldStyle}" Margin="10,0" 
-                                               Grid.Column="4" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Commande.StatutCommande}"
+                           Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
+
+                            <!--Rajout Clément, on change la couleur en fonction de si c'est commande fournisseur ou client-->     
+                            <TextBlock Grid.Column="4" VerticalAlignment="Center" Margin="10,0"
+                            Text="{Binding Commande.FormattedPrixTotal}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BoldStyle}">
+                                        <Setter Property="Foreground" Value="Black" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Commande.IsClient}" Value="False">
+                                                <Setter Property="Foreground" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
 
 
-                                    <!-- Boutons placés directement dans la grille / Modifié par Clément le 30/01/2025 -->
+                                    <!-- Boutons -->
                                     <Grid Grid.Column="5" HorizontalAlignment="Right">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -133,23 +141,24 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Button Grid.Column="0" Cursor="Hand" Command="{Binding ClickVoirDetailsCommande}" 
-                                                Width="30" Height="30" Margin="5,0">
+                            Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/detail.png" Width="16" Height="16" />
                                         </Button>
                                         <Button Grid.Column="1" Cursor="Hand" Command="{Binding RecuCommande}" 
-                                                Width="30" Height="30" Margin="5,0">
+                            Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/check.png" Width="16" Height="16" />
                                         </Button>
                                         <Button Grid.Column="2" Cursor="Hand" Command="{Binding ClickSupprimerCommande}" 
-                                                Width="30" Height="30" Margin="5,0">
+                            Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16" />
                                         </Button>
                                     </Grid>
-
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+
+
 
                 </StackPanel>
             </Border>
