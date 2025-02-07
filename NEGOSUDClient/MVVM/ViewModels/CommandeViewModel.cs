@@ -8,6 +8,9 @@ using System.Windows.Input;
 using System.Windows;
 using NEGOSUDClient.MVVM.ViewModels.Items;
 using NegosudLibrary.DAO;
+using System.Windows.Controls;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace NEGOSUDClient.MVVM.ViewModels;
 public class CommandeViewModel : BaseViewModel
@@ -19,6 +22,8 @@ public class CommandeViewModel : BaseViewModel
     public ObservableCollection<FournisseurDTO> ListeFournisseur { get; set; } = new();
     public ObservableCollection<CommandeItemViewModel> Commandes { get; set; } = new();
 
+
+    
     public ICommand OpenCommandCreationFormCommand { get; set; }
     public ICommand CloseCommandeCommand { get; set; }
     public ICommand OpenFormDetailCommande { get; set; }
@@ -209,10 +214,63 @@ public class CommandeViewModel : BaseViewModel
         }
     }
 
-
     public event EventHandler RefreshCommandeRequested;
 
+    private bool _isClientChecked;
+    public bool IsClientChecked
+    {
+        get => _isClientChecked;
+        set
+        {
+            if (_isClientChecked != value)
+            {
+                _isClientChecked = value;
+                OnPropertyChanged(nameof(IsClientChecked));
+                OnPropertyChanged(nameof(SelectedUserClient));
+                
+                foreach (var ligne in LigneCommande)
+                {
+                    if (ligne.Article != null && ligne.Quantite > 0)
+                    {
+                        double nouveauPrixUnitaire = value ? ligne.Article.PrixVente : ligne.Article.PrixAchat;
+                        ligne.Prix = nouveauPrixUnitaire * ligne.Quantite;
+                    }
+                }
 
+                OnPropertyChanged(nameof(PrixTotal));
+                OnPropertyChanged(nameof(Taxes));
+                OnPropertyChanged(nameof(TotalCommande));
+            }
+        }
+    }
+
+
+    public ObservableCollection<UserDTO> SelectedUserClient
+    {
+        get
+        {
+            // Si la liste d'origine est vide, on renvoie une nouvelle collection vide
+            if (ListeUser == null)
+                return new ObservableCollection<UserDTO>();
+
+            const int ID_ROLE_CLIENT = 3;
+
+            const int ID_ROLE_EMPLOYE = 1;
+
+            if (IsClientChecked)
+            {
+                // Mode client : on ne garde que les utilisateurs dont RoleId == 3
+                var clients = ListeUser.Where(u => u.RoleId == ID_ROLE_CLIENT);
+                return new ObservableCollection<UserDTO>(clients);
+            }
+            else
+            {
+                // Mode employé : on garde les utilisateurs dont IdRole est RoleId == 1
+                var employees = ListeUser.Where(u => u.RoleId == ID_ROLE_EMPLOYE);
+                return new ObservableCollection<UserDTO>(employees);
+            }
+        }
+    }
 
     // Ceci est un constructeur, cela détermine des comportements lors de la création d'une instance de la classe ( la viewmodel quoi)  
     public CommandeViewModel()
@@ -243,14 +301,23 @@ public class CommandeViewModel : BaseViewModel
 
     }
 
+    
     private void AjouterArticle(object obj)
     {
         LigneCommandeDTO ligneCommande = new LigneCommandeDTO();
 
+
+        // Affecter la quantité saisie
         ligneCommande.Quantite = QuantiteInput;
-        ligneCommande.Prix = SelectedArticle.PrixAchat * QuantiteInput;
+
+        // Choisir le prix unitaire en fonction du mode client ou employé
+        double prixUnitaire = IsClientChecked ? SelectedArticle.PrixVente : SelectedArticle.PrixAchat;
+        ligneCommande.Prix = prixUnitaire * QuantiteInput;
+
+        // Affecter l'article et son identifiant
         ligneCommande.Article = SelectedArticle;
         ligneCommande.ArticleId = SelectedArticle.Id;
+
 
         if (SelectedUser == null)
         {
@@ -281,15 +348,16 @@ public class CommandeViewModel : BaseViewModel
         if (articleExistant != null)
         {
             articleExistant.Quantite += QuantiteInput;
+            double nouveauPrixUnitaire = IsClientChecked ? SelectedArticle.PrixVente : SelectedArticle.PrixAchat;
+            articleExistant.Prix = nouveauPrixUnitaire * articleExistant.Quantite;
             OnPropertyChanged(nameof(ListeCommande));
         }
         else
         {
             LigneCommande.Add(ligneCommande);
-
         }
 
-        QuantiteInput = 0; // Remet à zéro après ajout
+        QuantiteInput = 0;
         OnPropertyChanged(nameof(ListeCommande));
     }
 
@@ -324,13 +392,12 @@ public class CommandeViewModel : BaseViewModel
                 commandeDAO.LignesCommande.Add(ligneCommande.LigneCommandeDtoToDao());
             }
 
-        
-
         // Appel API pour enregistrer la commande
         bool success = await HttpClientService.CreateNewCommand(commandeDAO);
 
         if (success)
         {
+
             MessageBox.Show("Commande enregistrée avec succès !");
             LigneCommande.Clear(); // Réinitialiser la liste après ajout
             QuantiteInput = 0;
@@ -361,10 +428,8 @@ public class CommandeViewModel : BaseViewModel
     {
         if (CreateUpdateCommandeFormVisibility == Visibility.Hidden)
         {
-
-            CommandeDAO = new Commande();
-            CreateUpdateCommandeFormVisibility = Visibility.Visible;
-
+                CommandeDAO = new Commande();
+                CreateUpdateCommandeFormVisibility = Visibility.Visible;
         }
     }
 
@@ -477,6 +542,8 @@ public class CommandeViewModel : BaseViewModel
                 ListeUser.Add(userDTO);
 
             }
+            
+            OnPropertyChanged(nameof(SelectedUserClient));
         }, TaskScheduler.FromCurrentSynchronizationContext());
     }
     private void GetArticles()

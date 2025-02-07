@@ -67,7 +67,6 @@
 
                 </Grid>
             </Grid>
-
             <!-- Tableau principal -->
             <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="5">
                 <StackPanel>
@@ -92,7 +91,6 @@
                     </Grid>
 
                     <!-- Contenu du tableau -->
-                    <!-- Contenu du tableau -->
                     <ItemsControl ItemsSource="{Binding ListeCommande}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -107,7 +105,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <!-- Colonne ajustée pour les boutons -->
                                     </Grid.ColumnDefinitions>
-
+                                    
                                     <TextBlock Text="{Binding Commande.Id, StringFormat=# {0}}" 
                                                 Style="{StaticResource BoldStyle}" Margin="10,0" 
                                                 Grid.Column="0" VerticalAlignment="Center" />
@@ -121,9 +119,10 @@
                                     <TextBlock Text="{Binding Commande.StatutCommande}" 
                                                 Margin="10,0" Grid.Column="3" VerticalAlignment="Center"/>
 
-                                    <TextBlock Text="{Binding Commande.PrixTotal, StringFormat={}{0:F2} €}" 
+                                    <TextBlock Text="{Binding Commande.PrixTotal, StringFormat={}{0} €}" 
                                                Style="{StaticResource BoldStyle}" Margin="10,0" 
                                                Grid.Column="4" VerticalAlignment="Center"/>
+
 
                                     <!-- Boutons placés directement dans la grille / Modifié par Clément le 30/01/2025 -->
                                     <Grid Grid.Column="5" HorizontalAlignment="Right">
@@ -179,7 +178,7 @@
                 </StackPanel>
             </Grid>-->
         </Grid>
-        <Templates:FormCommande Visibility="{Binding IsFormCommandeVisible}"/>
-        <Templates:CreerCommande Visibility="{Binding CreateUpdateCommandeFormVisibility}" /> 
+        <Templates:FormCommande Visibility="{Binding IsFormCommandeVisible}" d:Visibility="Collapsed"/>
+        <Templates:CreerCommande Visibility="{Binding CreateUpdateCommandeFormVisibility}" d:Visibility="Collapsed"/>
     </Grid>
 </UserControl>
