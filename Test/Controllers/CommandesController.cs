@@ -47,7 +47,11 @@ namespace ApiNegosud.Controllers
                     FournisseurNom = item.Fournisseur.NomDomaine,
                     PrixTotal = prixtotal,
                     UserNom = item.User.Nom + " " + item.User.Prenom,
-                    StatutCommande = item.StatutCommande.Statut
+                    StatutCommande = item.StatutCommande.Statut,
+
+                    //Rajout Clément pour gérer les etats de commande
+                    IsClient = item.IsClient
+
                 };
 
                 foreach (var ligne in item.LignesCommande)

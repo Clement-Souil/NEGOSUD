@@ -48,18 +48,42 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Client -->
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Employé" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <!-- Employés et Clients -->
+            <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="Employé" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <ComboBox Grid.Row="0" Grid.Column="0" Margin="10,30,10,1" Height="40" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" Grid.ColumnSpan="2" ItemsSource="{Binding ListeUser}" 
                  SelectedItem="{Binding SelectedUser}" 
-                 DisplayMemberPath="Nom" />
+                 DisplayMemberPath="Nom" />-->
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="Employé" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsClientChecked}" Value="True">
+                                <Setter Property="Text" Value="Client" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!-- ComboBox qui affiche la liste filtrée -->
+            <ComboBox Grid.Row="0" Grid.Column="0" Margin="10,30,10,1" Height="40" VerticalAlignment="Top"
+                  Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC"
+                  Grid.ColumnSpan="2"
+                  ItemsSource="{Binding SelectedUserClient}"
+                  SelectedItem="{Binding SelectedUser}"
+                  DisplayMemberPath="Nom" />
+
+            <CheckBox Content="Mode client"
+                        IsChecked="{Binding IsClientChecked, Mode=TwoWay}" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,40,200,100" Grid.RowSpan="2" />
+
 
             <!-- Fournisseur -->
             <TextBlock Grid.Row="0" Grid.Column="3" Text="Fournisseur" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <ComboBox Grid.Row="0" Grid.Column="3" Margin="10,30,10,1" Height="40" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" Grid.ColumnSpan="2" ItemsSource="{Binding ListeFournisseur}" 
                  SelectedItem="{Binding SelectedFournisseur}" 
                  DisplayMemberPath="NomDomaine" />
-            
+
             <!-- Articles -->
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Articles" FontSize="14" FontWeight="Bold" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <ComboBox Grid.Row="1" Grid.Column="0" Margin="10,30,10,10" Height="40" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" Grid.ColumnSpan="2" ItemsSource="{Binding ListeArticle}" 
@@ -119,9 +143,24 @@
                                                 <ColumnDefinition Width="1*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Article.Nom}" Grid.Column="0" Padding="8"/>
-                                            <TextBlock Text="{Binding Article.PrixAchat, StringFormat=N2}" Grid.Column="1" Padding="8" HorizontalAlignment="Center"/>
-                                            <TextBox Text="{Binding Quantite}" IsReadOnly="True" Grid.Column="2" Width="100" Height="30" Background="White" BorderBrush="Gray" BorderThickness="1"/>
+                                            <!--<TextBlock Text="{Binding Article.PrixAchat, StringFormat=N2}" Grid.Column="1" Padding="8" HorizontalAlignment="Center"/>-->
+                                            <TextBlock Grid.Column="1" Padding="8" HorizontalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <!-- Valeur par défaut : prix d'achat -->
+                                                        <Setter Property="Text" Value="{Binding Article.PrixAchat, StringFormat=N2}" />
+                                                        <Style.Triggers>
+                                                            <!-- On remonte jusqu'au DataContext du UserControl (ou ItemsControl) pour accéder à IsClientChecked -->
+                                                            <DataTrigger Binding="{Binding DataContext.IsClientChecked, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
+                                                                <!-- Si IsClientChecked est True, on affiche le prix de vente -->
+                                                                <Setter Property="Text" Value="{Binding Article.PrixVente, StringFormat=N2}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
                                             <TextBlock Text="{Binding Prix, StringFormat=N2}" Grid.Column="3" Padding="8" HorizontalAlignment="Center"/>
+                                            <TextBox Text="{Binding Quantite}" IsReadOnly="True" Grid.Column="2" Width="100" Height="30" Background="White" BorderBrush="Gray" BorderThickness="1"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

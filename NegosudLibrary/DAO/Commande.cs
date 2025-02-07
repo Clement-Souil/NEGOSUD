@@ -33,6 +33,10 @@ public class Commande
     [Column("fournisseurid")]
     public int FournisseurId { get; set; }
 
+    // Nouvelle propriété pour distinguer les commandes clients des commandes fournisseurs
+    [Column("isClient")]
+    public bool IsClient { get; set; }
+
     public virtual Fournisseur? Fournisseur { get; set; } = null!;
 
     public virtual List<LigneCommande>? LignesCommande { get; set; } = new List<LigneCommande>();
