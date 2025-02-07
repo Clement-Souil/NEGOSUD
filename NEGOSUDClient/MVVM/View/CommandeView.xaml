@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <!-- Style global pour toute la page -->
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="12"/> 
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
         <!-- Style spécifique pour les titres -->

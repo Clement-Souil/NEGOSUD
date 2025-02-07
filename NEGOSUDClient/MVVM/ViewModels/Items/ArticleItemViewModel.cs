@@ -20,9 +20,12 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
 
         public ICommand ClickDeleteCommand { get; set; }
         public ICommand ClickDetailsCommand { get; set; }
+        public ICommand ClickMouvementStockCommand { get; set; }
 
         public event EventHandler deleted;
         public event EventHandler openDetails;
+        public event EventHandler<ArticleDTO> MouvementStockRequested;
+
 
 
         public ArticleItemViewModel(ArticleDTO _article, UserDTO user)
@@ -31,6 +34,8 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
             User = user;
 
             ClickDetailsCommand = new RelayCommand(OpenDetails);
+
+            ClickMouvementStockCommand = new RelayCommand(OnMouvementStockRequested);
             ClickDeleteCommand = new RelayCommand(DeleteArticle, o => { return AuthService.IsAdmin(); }); //Clément - 31/01/2025 / Ajout du blocages des suppressions pour les employés
         }
 
@@ -55,7 +60,11 @@ namespace NEGOSUDClient.MVVM.ViewModels.Items
             openDetails?.Invoke(sender, EventArgs.Empty);
         }
 
-        
+        private void OnMouvementStockRequested(object obj)
+        {
+            MouvementStockRequested?.Invoke(this, Article);
+        }
+
 
     }
 }

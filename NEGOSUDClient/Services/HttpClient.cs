@@ -343,4 +343,18 @@ public class HttpClientService
 
         return response.IsSuccessStatusCode;
     }
+
+    public static async Task<IEnumerable<MouvementStock>> GetMouvementStock()
+    {
+        string route = $"api/MouvementStocks";
+        var response = await Client.GetAsync(route);
+
+        if (response.IsSuccessStatusCode)
+        {
+            string resultat = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<IEnumerable<MouvementStock>>(resultat)
+                ?? throw new FormatException($"Erreur Http : {route}");
+        }
+        throw new Exception(response.ReasonPhrase);
+    }
 }

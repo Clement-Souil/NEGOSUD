@@ -36,10 +36,6 @@ namespace ApiNegosud.Controllers
             foreach (var item in L)
             {
                 double prixtotal = 0;
-                foreach (var ligne in item.LignesCommande)
-                {
-                    prixtotal += ligne.Prix;
-                }
 
                 CommandeDTO dto = new CommandeDTO
                 {
@@ -57,6 +53,24 @@ namespace ApiNegosud.Controllers
                     IsClient = item.IsClient
 
                 };
+
+                foreach (var ligne in item.LignesCommande)
+                {
+                    prixtotal += ligne.Prix;
+
+                    LigneCommandeDTO ligneCommandDto = new LigneCommandeDTO();
+
+                    ligneCommandDto.Id = ligne.Id;
+                    ligneCommandDto.Prix = ligne.Prix;
+                    ligneCommandDto.Quantite = ligne.Quantite;
+                    ligneCommandDto.ArticleId = ligne.ArticleId;
+                    ligneCommandDto.CommandeId = ligne.CommandeId;
+
+                    dto.LignesCommandes.Add(ligneCommandDto);
+                }
+
+                dto.PrixTotal = prixtotal;
+
                 commandeDTOs.Add(dto);
 
             }

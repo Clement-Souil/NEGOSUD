@@ -67,6 +67,8 @@ namespace NEGOSUDClient.MVVM.ViewModels
             }
         }
 
+        public event EventHandler<ArticleDTO> MouvementStockRequested;
+
         public Visibility _createUpdateArticleFormVisibility = Visibility.Hidden;
 
         public Visibility CreateUpdateArticleFormVisibility
@@ -351,8 +353,9 @@ namespace NEGOSUDClient.MVVM.ViewModels
             {
                 foreach (var art in t.Result)
                 {
-                    //Clément - 31/01/2025 / Ajout du blocages des suppressions pour les employés
                     var item = new ArticleItemViewModel(art, user);
+                    item.MouvementStockRequested += MouvementStockRequestedHandler;
+
                     item.openDetails += OpenArticleForm;
                     item.deleted += DeleteArticle;
                     Articles.Add(item);
@@ -361,6 +364,11 @@ namespace NEGOSUDClient.MVVM.ViewModels
                 }
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void MouvementStockRequestedHandler(object? sender, ArticleDTO article)
+        {
+            MouvementStockRequested?.Invoke(this, article);
         }
 
         private void DeleteArticle(object? sender, EventArgs e)

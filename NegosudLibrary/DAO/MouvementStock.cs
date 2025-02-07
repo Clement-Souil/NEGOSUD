@@ -25,12 +25,12 @@ public class MouvementStock
     [Column("articleid")]
     public int ArticleId { get; set; }
 
-    public virtual Article? Article { get; set; } = null!;
+    public virtual Article? Article { get; set; }
 
     [ForeignKey(nameof(TypeMouvement))]
     [Column("typemouvementid")]
     public int TypeMouvementId { get; set; }
 
-    public virtual TypeMouvement? TypeMouvement { get; set; } = null!;
+    public virtual TypeMouvement? TypeMouvement { get; set; }
 
 }

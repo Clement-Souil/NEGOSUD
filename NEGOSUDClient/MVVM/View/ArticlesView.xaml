@@ -119,6 +119,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Grid.Column="0"  Cursor="Hand" x:Name="btnDetails" Command="{Binding ClickDetailsCommand}"  Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/detail.png" Width="16" Height="16"/>
@@ -126,6 +127,9 @@
                                         <!--<Button x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Content="Supprimer" Margin="2 2" Grid.Column="7" Style="{StaticResource RoundedButtonStyle}"/>-->
                                         <Button Grid.Column="1"  Cursor="Hand" x:Name="btnDelete" Command="{Binding ClickDeleteCommand}" Width="30" Height="30" Margin="5,0">
                                             <Image Source="../../assets/Logo/Logo_Delete_Detail/poubelle.png" Width="16" Height="16"/>
+                                        </Button>
+                                        <Button Grid.Column="2" x:Name="btnMouvementStock" Command="{Binding ClickMouvementStockCommand}" Width="30" Height="30" Margin="5,0">
+                                            <Image Source="../../assets/Logo/Logo_Delete_Detail/arrows-clockwise.png" Width="16" Height="16"/>
                                         </Button>
                                     </Grid>
 

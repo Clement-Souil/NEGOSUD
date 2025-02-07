@@ -609,19 +609,13 @@ public class CommandeViewModel : BaseViewModel
 
         foreach (var ligneCommande in cmd.LignesCommande!)
         {
-            Article article = await HttpClientService.GetArticlebyId(ligneCommande.Id);
+            Article article = await HttpClientService.GetArticlebyId(ligneCommande.ArticleId);
 
             article.Quantite = article.Quantite + (int)ligneCommande.Quantite;
 
             await HttpClientService.ModifyArticle(article, article.Id);
 
-            MouvementStock mouvementStock = new MouvementStock();
-            mouvementStock.Date = DateTime.Now;
-            mouvementStock.TypeMouvementId = 4;
-            mouvementStock.ArticleId = article.Id;
-            mouvementStock.Quantite = (int)ligneCommande.Quantite;
-
-            await HttpClientService.CreateNewMouvementStock(mouvementStock);
+            MouvementStockService.AddMouvementStock((int)ligneCommande.Quantite, article, 4);
         }
 
         OnRefreshCommandRequested();

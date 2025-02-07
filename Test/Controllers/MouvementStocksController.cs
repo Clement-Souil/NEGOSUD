@@ -27,7 +27,12 @@ namespace ApiNegosud.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MouvementStock>>> GetMouvementStocks()
         {
-            return await _context.MouvementStocks.ToListAsync();
+            var mouvements = await _context.MouvementStocks
+                .Include(m => m.Article)          // 🔥 Ajoute cette ligne
+                .Include(m => m.TypeMouvement)    // 🔥 Et celle-ci
+                .ToListAsync();
+
+            return Ok(mouvements);
         }
 
         // GET: api/MouvementStocks/5
