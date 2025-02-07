@@ -45,7 +45,7 @@ public class MouvementStockViewModel
                     ListMouvementStock.Add(MouvementStock);
                 }
             }
-        });
+        }, TaskScheduler.FromCurrentSynchronizationContext());
     }
     private void OnReturnToArticleRequested(object obj)
     {
