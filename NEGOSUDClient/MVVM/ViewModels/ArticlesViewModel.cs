@@ -4,7 +4,6 @@ using NEGOSUDClient.Services;
 using NEGOSUDClient.Tools;
 using NegosudLibrary.DAO;
 using NegosudLibrary.DTO;
-using NegosudLibrary.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -325,8 +324,6 @@ namespace NEGOSUDClient.MVVM.ViewModels
                 
                 ModifyOrCreate = "Create";
                 ArticleDAO = new Article();
-                CreateUpdateArticleFormVisibility = Visibility.Visible;
-
             }
         }
 

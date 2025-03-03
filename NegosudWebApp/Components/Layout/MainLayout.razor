@@ -1,0 +1,82 @@
+﻿@inherits LayoutComponentBase
+
+<div class="main-layout">
+    <div class="sidebar">
+        <div class="logo">
+            <NavLink href="/">
+                <img src="bootstrap/Logos/LogoNEGOSUD.png" alt="Logo Negosud" />
+            </NavLink>
+        </div>
+        <nav>
+            <ul>
+                <li><NavLink href="/commandes" class="nav-link">Commandes</NavLink></li>
+                <li><NavLink href="/articles" class="nav-link">Articles</NavLink></li>
+                <li><NavLink href="/clients" class="nav-link">Clients</NavLink></li>
+                <li><NavLink href="/moncompte" class="nav-link">Mon Compte</NavLink></li>
+                <li><NavLink href="/panier" class="nav-link">Panier</NavLink></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        <!-- Icônes en haut à droite -->
+        <div class="header-icons">
+            <NavLink href="/moncompte">
+                <img src="bootstrap/Logos/person.svg" alt="Mon compte" class="header-icon" />
+            </NavLink>
+            <NavLink href="/panier">
+                <img src="bootstrap/Logos/panier.svg" alt="Panier" class="header-icon" />
+            </NavLink>
+        </div>>
+        @Body
+    </div>
+</div>
+
+<style>
+    .main-layout {
+        display: grid;
+        grid-template-columns: 200px 1fr 2px;
+        height: 100vh;
+    }
+
+    .sidebar {
+        background-color: white;
+        padding: 20px;
+    }
+
+    .logo img {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        text-decoration: none;
+        color: black;
+        border-radius: 10px;
+    }
+
+        .nav-link:hover {
+            background-color: #FCE4EC;
+        }
+
+    .content {
+        padding: 20px;
+    }
+
+    .separator {
+        background-color: black;
+        width: 2px;
+    }
+</style>

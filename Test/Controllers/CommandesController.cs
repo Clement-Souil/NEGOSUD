@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NegosudLibrary.DAO;
 using NegosudLibrary.DBContext;
 using NegosudLibrary.DTO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiNegosud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CommandesController : ControllerBase
@@ -24,16 +21,21 @@ namespace ApiNegosud.Controllers
             _context = context;
         }
 
-        // GET: api/Commandes
+        // GET: api/Commandes (Liste de toutes les commandes)
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CommandeDTO>>> GetCommandes()
         {
+            var commandes = await _context.Commandes
+                .Include(c => c.StatutCommande)
+                .Include(c => c.User)
+                .Include(c => c.Fournisseur)
+                .Include(c => c.LignesCommande)
+                .ThenInclude(lc => lc.Article)
+                .ToListAsync();
+
             List<CommandeDTO> commandeDTOs = new List<CommandeDTO>();
-            int i = 1;
 
-            var L = await _context.Commandes.Include(n => n.StatutCommande).Include(a => a.User).Include(v => v.Fournisseur).Include(c => c.LignesCommande).ThenInclude(x => x.Article).ToListAsync();
-
-            foreach (var item in L)
+            foreach (var item in commandes)
             {
                 double prixtotal = 0;
 
@@ -47,84 +49,87 @@ namespace ApiNegosud.Controllers
                     FournisseurNom = item.Fournisseur.NomDomaine,
                     PrixTotal = prixtotal,
                     UserNom = item.User.Nom + " " + item.User.Prenom,
+                    UserAdresse = item.User.Adresse, // ✅ Adresse utilisateur ajoutée
                     StatutCommande = item.StatutCommande.Statut,
-
-                    //Rajout Clément pour gérer les etats de commande
-                    IsClient = item.IsClient
-
+                    IsClient = item.IsClient, // ✅ Ajout du champ IsClient
+                    LignesCommandes = new List<LigneCommandeDTO>()
                 };
 
                 foreach (var ligne in item.LignesCommande)
                 {
-                    prixtotal += ligne.Prix;
+                    prixtotal += ligne.Prix * ligne.Quantite; // ✅ Multiplication correcte avec quantité
 
-                    LigneCommandeDTO ligneCommandDto = new LigneCommandeDTO();
+                    LigneCommandeDTO ligneCommandeDto = new LigneCommandeDTO
+                    {
+                        Id = ligne.Id,
+                        Prix = ligne.Prix,
+                        Quantite = ligne.Quantite,
+                        ArticleId = ligne.ArticleId,
+                        CommandeId = ligne.CommandeId,
+                        Article = new ArticleDTO
+                        {
+                            Id = ligne.Article.Id,
+                            Nom = ligne.Article.Nom,
+                            PrixVente = ligne.Article.PrixVente
+                        }
+                    };
 
-                    ligneCommandDto.Id = ligne.Id;
-                    ligneCommandDto.Prix = ligne.Prix;
-                    ligneCommandDto.Quantite = ligne.Quantite;
-                    ligneCommandDto.ArticleId = ligne.ArticleId;
-                    ligneCommandDto.CommandeId = ligne.CommandeId;
-
-                    dto.LignesCommandes.Add(ligneCommandDto);
+                    dto.LignesCommandes.Add(ligneCommandeDto);
                 }
 
-                dto.PrixTotal = prixtotal;
-
+                dto.PrixTotal = prixtotal; // ✅ Mise à jour correcte du prix total
                 commandeDTOs.Add(dto);
-
             }
+
             return commandeDTOs;
         }
 
-        // GET: api/Commandes/5
+        // GET: api/Commandes/{id} (Commande spécifique)
         [HttpGet("{id}")]
-        public async Task<ActionResult<Commande>> GetCommande(int id)
+        public async Task<ActionResult<CommandeDTO>> GetCommandeById(int id)
         {
-            Commande commande = await _context.Commandes.Include(n => n.StatutCommande).Include(a => a.User).Include(v => v.Fournisseur).Include(c => c.LignesCommande).ThenInclude(x => x.Article).FirstOrDefaultAsync(a => a.Id == id);
+            var item = await _context.Commandes
+                .Include(c => c.StatutCommande)
+                .Include(c => c.User)
+                .Include(c => c.Fournisseur)
+                .Include(c => c.LignesCommande)
+                .ThenInclude(lc => lc.Article)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-            if (commande == null)
+            if (item == null)
             {
                 return NotFound();
             }
-            
-            commande.User.Nom = $"{commande.User.Nom} {commande.User.Prenom}".Trim();
 
-
-            //var lignes = await _context.LigneCommandes.Where(c => c.CommandeId == id).ToListAsync();
-            //commande.LignesCommande = lignes;
-
-            // transformation de DAO à DTO avant envoi
-
-            //List<LigneCommandeDTO> l = new List<LigneCommandeDTO>();
-            //foreach (var ligne in lignes)
-            //{
-            //    var truc = new LigneCommandeDTO
-            //    {
-            //        Id = ligne.Id,
-            //        Prix = ligne.Prix,
-            //        Quantite = ligne.Quantite,
-            //        ArticleId = ligne.ArticleId,
-            //        Article = ligne.Article.Nom,
-
-
-            //    };
-            //}
-
-            //CommandeDTO CommandeDTO = new CommandeDTO();
-            //CommandeDTO.Id = commande.Id;
-            //CommandeDTO.Date = commande.Date;
-            //CommandeDTO.UserId = commande.UserId;
-            //CommandeDTO.UserNom = commande.User.Nom;
-            //CommandeDTO.FournisseurId = commande.FournisseurId;
-            //CommandeDTO.FournisseurNom = commande.Fournisseur.NomDomaine;
-            //CommandeDTO.LignesCommandes = commande.LignesCommande;
-
-            return commande;
+            return new CommandeDTO
+            {
+                Id = item.Id,
+                Date = item.Date,
+                UserId = item.UserId,
+                UserNom = $"{item.User.Nom} {item.User.Prenom}".Trim(),
+                UserAdresse = item.User.Adresse, // ✅ Adresse utilisateur ajoutée
+                StatutCommandeId = item.StatutCommandeId,
+                StatutCommande = item.StatutCommande.Statut,
+                FournisseurId = item.FournisseurId,
+                FournisseurNom = item.Fournisseur.NomDomaine,
+                PrixTotal = item.LignesCommande.Sum(lc => lc.Prix * lc.Quantite),
+                LignesCommandes = item.LignesCommande.Select(lc => new LigneCommandeDTO
+                {
+                    Id = lc.Id,
+                    Prix = lc.Prix,
+                    Quantite = lc.Quantite,
+                    ArticleId = lc.ArticleId,
+                    Article = new ArticleDTO
+                    {
+                        Id = lc.Article.Id,
+                        Nom = lc.Article.Nom,
+                        PrixVente = lc.Article.PrixVente
+                    }
+                }).ToList()
+            };
         }
 
-        // PUT: api/Commandes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: api/Commandes/{id} (Modification)
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCommande(int id, Commande commande)
         {
@@ -154,34 +159,37 @@ namespace ApiNegosud.Controllers
             return NoContent();
         }
 
-        // POST: api/Commandes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Commandes (Création)
         [HttpPost]
         public async Task<ActionResult<Commande>> PostCommande(Commande commande)
         {
             _context.Commandes.Add(commande);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCommande", new { id = commande.Id }, commande);
+            return CreatedAtAction("GetCommandeById", new { id = commande.Id }, commande);
         }
 
-        // DELETE: api/Commandes/5
+        // DELETE: api/Commandes/{id} (Suppression)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCommande(int id)
         {
-            var commande = await _context.Commandes.FindAsync(id);
+            var commande = await _context.Commandes
+                .Include(c => c.LignesCommande) // 🔥 Supprime les lignes associées
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (commande == null)
             {
                 return NotFound();
             }
-            _context.LigneCommandes.RemoveRange(_context.LigneCommandes.Where(x => x.CommandeId == id));
-            //_context.LigneCommandes.Where(x => x.CommandeId == id);
+
+            _context.LigneCommandes.RemoveRange(commande.LignesCommande);
             _context.Commandes.Remove(commande);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        // Vérification d'existence
         private bool CommandeExists(int id)
         {
             return _context.Commandes.Any(e => e.Id == id);

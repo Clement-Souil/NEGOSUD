@@ -1,0 +1,72 @@
+﻿/* Conteneur principal des formulaires */
+.auth-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Dimensions des formulaires */
+.login-form, .register-form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* Conteneur de chaque formulaire */
+.form-container {
+    background-color: #F5DEB3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Groupe de champs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Alignement horizontal des champs */
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* Style des champs de saisie */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style des boutons */
+.btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    .btn:hover {
+        background-color: #340303;
+    }
+
+/* Style des messages d'erreur */
+.error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 20px;
+}

@@ -11,7 +11,7 @@ using NegosudLibrary.DBContext;
 
 namespace ApiNegosud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FamilleArticlesController : ControllerBase

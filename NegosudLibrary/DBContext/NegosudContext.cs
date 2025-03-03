@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Design;
 namespace NegosudLibrary.DBContext;
 
 
-public class NegosudContext(DbContextOptions<NegosudContext> options) : IdentityDbContext<UserSecure>(options)
+public class NegosudContext(DbContextOptions<NegosudContext> options) : DbContext(options)
 {
     public DbSet<Article> Articles { get; set; }
 

@@ -1,0 +1,84 @@
+﻿.article-detail-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: start;
+    margin-top: 30px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+/* Image à gauche */
+.article-image img {
+    width: 700px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Informations à droite */
+.article-details {
+    max-width: 400px;
+}
+
+/* Type de l'article */
+.article-type {
+    color: grey;
+    font-size: 18px;
+}
+
+/* Prix */
+.article-price {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Sélection quantité */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+    .quantity-selector input {
+        width: 50px;
+        padding: 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+/* Bouton panier */
+.add-to-cart {
+    background-color: darkred;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+    .add-to-cart:hover {
+        background-color: #340303;
+    }
+
+/* Description */
+.article-description {
+    margin-top: 40px;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .article-description h3 {
+        font-size: 20px;
+        font-weight: bold;
+    }

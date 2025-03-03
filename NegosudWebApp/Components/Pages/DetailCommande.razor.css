@@ -1,0 +1,58 @@
+﻿body .commande-titre {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+}
+
+.commande-detail-container {
+    border: 2px solid #007bff;
+    padding: 20px;
+    margin: auto;
+    max-width: 600px;
+    background: #f9f9f9;
+}
+
+.commande-header {
+    background: #eeeeee;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.adresse-expedition {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.commande-resume {
+    margin-top: 10px;
+}
+
+.commande-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.commande-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.article-image {
+    width: 50px;
+    height: 75px;
+    object-fit: cover;
+}
+
+.commande-total {
+    text-align: right;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.commande-total h3 {
+    font-size: 22px;
+    font-weight: bold;
+}

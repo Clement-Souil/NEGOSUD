@@ -12,7 +12,7 @@ using NegosudLibrary.DTO;
 
 namespace ApiNegosud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ArticlesController : ControllerBase

@@ -1,0 +1,168 @@
+﻿@page "/articles"
+@using NegosudWebApp.Services
+@using NegosudLibrary.DTO
+@inject HttpClientService ArticlesService
+@rendermode InteractiveServer
+
+<PageTitle>Nos produits</PageTitle>
+
+<h1>Nos produits</h1>
+
+<!-- Barre de recherche avec un bouton -->
+<div class="search-container">
+    <form @onsubmit="OnSearch">
+        <input type="text" @bind="SearchString" placeholder="Recherchez..." class="search-input" />
+        <button type="submit" class="search-button"></button>
+    </form>
+</div>
+
+@if (erreurMessage != null)
+{
+    <p style="color: grey; text-align:center;">Erreur : @erreurMessage</p>
+}
+else if (FilteredArticles == null || !FilteredArticles.Any())
+{
+    <p style="text-align:center;">Aucun article disponible.</p>
+}
+else
+{
+    <div class="articles-table-container">
+        <table class="articles-table">
+            <thead>
+                <tr>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.Nom))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.Nom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Nom
+                    </th>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.Fournisseur))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.Fournisseur) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Domaine
+                    </th>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.Famille))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.Famille) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Type
+                    </th>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.Annee))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.Annee) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Année
+                    </th>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.Volume))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.Volume) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Volume
+                    </th>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.Quantite))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.Quantite) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Quantité
+                    </th>
+                    <th @onclick="() => SortTable(nameof(ArticleDTO.PrixVente))" 
+                        class="@(CurrentSortColumn == nameof(ArticleDTO.PrixVente) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Prix Vente (€)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var article in FilteredArticles)
+                {
+                    <tr>
+                        <td>
+                <NavLink class="article-link" href="@($"/detailarticle/{article.Id}")">
+                    @article.Nom
+                </NavLink>
+                        </td>
+                        <td>@article.Fournisseur</td>
+                        <td>@article.Famille</td>
+                        <td>@article.Annee</td>
+                        <td>@article.Volume L</td>
+                        <td>@article.Quantite</td>
+                        <td>@article.PrixVente €</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<ArticleDTO>? ArticleList;         // Liste complète d'articles
+    private List<ArticleDTO>? FilteredArticles;   // Liste filtrée
+    private string? erreurMessage;                // Message d'erreur
+    private string? SearchString { get; set; } = "";  // Texte de recherche
+    private string? CurrentSortColumn { get; set; }  // Colonne actuelle triée
+    private bool IsAscending { get; set; } = true;  // Ordre de tri (croissant par défaut)
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Charger les articles depuis l'API
+            ArticleList = await ArticlesService.GetArticlesAsync();
+
+            if (ArticleList == null || !ArticleList.Any())
+            {
+                erreurMessage = "Aucun article disponible.";
+                return;
+            }
+
+            // Initialiser les articles filtrés avec la liste complète
+            FilteredArticles = new List<ArticleDTO>(ArticleList);
+        }
+        catch (Exception ex)
+        {
+            erreurMessage = $"Erreur lors de la récupération des articles : {ex.Message}";
+            Console.WriteLine($"[Blazor ERROR] {ex}");
+        }
+    }
+
+    private void OnSearch()
+    {
+        // Filtrer les articles en fonction de la chaîne de recherche
+        if (string.IsNullOrWhiteSpace(SearchString))
+        {
+            // Si aucun texte de recherche, afficher tous les articles
+            FilteredArticles = new List<ArticleDTO>(ArticleList);
+        }
+        else
+        {
+            // Sinon, filtrer sur le Nom ou le Fournisseur
+            FilteredArticles = ArticleList
+                ?.Where(a => (a.Nom?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false)
+                          || (a.Fournisseur?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false)
+						    || (a.Famille?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false))
+                .ToList();
+        }
+    }
+
+    private void SortTable(string columnName)
+    {
+        // Inverser l'ordre de tri si la colonne est déjà triée
+        if (CurrentSortColumn == columnName)
+        {
+            IsAscending = !IsAscending;
+        }
+        else
+        {
+            CurrentSortColumn = columnName;
+            IsAscending = true;
+        }
+
+        // Appliquer le tri sur la colonne
+        FilteredArticles = columnName switch
+        {
+            nameof(ArticleDTO.Nom) => SortList(FilteredArticles, a => a.Nom),
+            nameof(ArticleDTO.Fournisseur) => SortList(FilteredArticles, a => a.Fournisseur),
+            nameof(ArticleDTO.Famille) => SortList(FilteredArticles, a => a.Famille),
+            nameof(ArticleDTO.Annee) => SortList(FilteredArticles, a => a.Annee),
+            nameof(ArticleDTO.Volume) => SortList(FilteredArticles, a => a.Volume),
+            nameof(ArticleDTO.Quantite) => SortList(FilteredArticles, a => a.Quantite),
+            nameof(ArticleDTO.PrixVente) => SortList(FilteredArticles, a => a.PrixVente),
+            _ => FilteredArticles
+        };
+    }
+
+    private List<T>? SortList<T>(List<T>? list, Func<T, object> keySelector)
+    {
+        return IsAscending
+            ? list?.OrderBy(keySelector).ToList()
+            : list?.OrderByDescending(keySelector).ToList();
+    }
+}

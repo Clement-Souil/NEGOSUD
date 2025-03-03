@@ -1,0 +1,134 @@
+﻿@page "/moncompte"
+@using NegosudWebApp.Services
+@using NegosudLibrary.DTO
+@using NegosudWebApp.Models
+@inject HttpClientService UserService
+@rendermode InteractiveServer
+
+
+
+<PageTitle>Mon Compte</PageTitle>
+
+<h1>Mon Compte</h1>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="error-message">@errorMessage</p>
+}
+
+<div class="auth-forms">
+    <!-- Connexion -->
+    <div class="login-form">
+        <h2>Déjà inscrit ?</h2>
+        <div class="form-container">
+            <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <InputText id="loginEmail" class="form-control" @bind-Value="loginModel.Email" />
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe</label>
+                    <InputText id="loginPassword" type="password" class="form-control" @bind-Value="loginModel.Mdp" />
+                </div>
+                <button type="submit" class="btn btn-primary">Connexion</button>
+            </EditForm>
+        </div>
+    </div>
+
+    <!-- Inscription -->
+    <div class="register-form">
+        <h2>Inscrivez-vous !</h2>
+        <div class="form-container">
+            <EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="registerPrenom">Prénom</label>
+                            <InputText id="registerPrenom" class="form-control" @bind-Value="registerModel.Prenom" />
+                        </div>
+                        <div class="col">
+                            <label for="registerNom">Nom</label>
+                            <InputText id="registerNom" class="form-control" @bind-Value="registerModel.Nom" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="registerEmail">Email</label>
+                            <InputText id="registerEmail" class="form-control" @bind-Value="registerModel.Email" />
+                        </div>
+                        <div class="col">
+                            <label for="registerTel">Tel</label>
+                            <InputText id="registerTel" class="form-control" @bind-Value="registerModel.Tel" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="registerAdresse">Adresse complète</label>
+                            <InputText id="registerAdresse" class="form-control" @bind-Value="registerModel.Adresse" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerMdp">Mot de passe</label>
+                    <InputText id="registerMdp" type="password" class="form-control" @bind-Value="registerModel.Mdp" />
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmMdp">Confirmez le mot de passe</label>
+                    <InputText id="registerConfirmMdp" type="password" class="form-control" @bind-Value="registerModel.ConfirmPassword" />
+                </div>
+                <button type="submit" class="btn btn-primary">Inscription</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private ConnexionModel.LoginModel loginModel = new();
+    private ConnexionModel.RegisterModel registerModel = new();
+    private string? errorMessage;
+
+    private async Task HandleLogin()
+    {
+        var success = await UserService.LoginAsync(loginModel);
+        if (!success)
+        {
+            errorMessage = "Échec de la connexion. Vérifiez vos identifiants.";
+        }
+        else
+        {
+            errorMessage = "Connexion réussie !";
+        }
+    }
+
+    private async Task HandleRegister()
+    {
+        if (registerModel.Mdp != registerModel.ConfirmPassword)
+        {
+            errorMessage = "Les mots de passe ne correspondent pas.";
+            return;
+        }
+
+        var success = await UserService.RegisterAsync(registerModel);
+        if (!success)
+        {
+            errorMessage = "Échec de l'inscription.";
+        }
+        else
+        {
+            errorMessage = "Inscription réussie !";
+        }
+    }
+
+}
+
+
