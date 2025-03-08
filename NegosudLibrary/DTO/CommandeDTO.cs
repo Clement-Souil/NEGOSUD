@@ -37,8 +37,9 @@ public string FormattedPrixTotal
         {
             // Si c'est une commande client (IsClient == true) on affiche un "+" sinon un "-"
             string prefix = IsClient ? "+ " : "- ";
+            double PrixFinal = (PrixTotal * 1.20) + 6;
             // On formate le prix avec 2 décimales et on ajoute le symbole €
-            return $"{prefix}{PrixTotal:F2} €";
+            return $"{prefix}{PrixFinal:F2} €";
         }
     }
 }
