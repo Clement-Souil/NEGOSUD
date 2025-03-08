@@ -151,7 +151,7 @@ public class HttpClientService
         throw new Exception(response.ReasonPhrase);
     }
 
-    public static async Task<Commande> GetCommandById(int id)
+    public static async Task<CommandeDTO> GetCommandById(int id)
     {
         string route = $"api/Commandes/{id}";
         var response = await Client.GetAsync(route);
@@ -159,11 +159,12 @@ public class HttpClientService
         if (response.IsSuccessStatusCode)
         {
             string resultat = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<Commande>(resultat)
+            return JsonConvert.DeserializeObject<CommandeDTO>(resultat)
                 ?? throw new FormatException($"Erreur Http : {route}");
         }
         throw new Exception(response.ReasonPhrase);
     }
+
 
     public static async Task<IEnumerable<UserDTO>> GetAllUsers()
     {

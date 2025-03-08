@@ -75,8 +75,8 @@ public class CommandeViewModel : BaseViewModel
         }
     }
 
-    private Commande _currentCommande;
-    public Commande CurrentCommande
+    private CommandeDTO _currentCommande;
+    public CommandeDTO CurrentCommande
     {
         get { return _currentCommande; }
         set
@@ -84,7 +84,7 @@ public class CommandeViewModel : BaseViewModel
             _currentCommande = value;
             if (value != null)
             {
-                PrixTotalDetails = CurrentCommande.LignesCommande.Sum(l => l.Prix);
+                PrixTotalDetails = CurrentCommande.LignesCommandes.Sum(l => l.Prix);
                 TaxesDetails = PrixTotalDetails * TAUX_TVA;
                 TotalCommandeDetails = PrixTotalDetails + TaxesDetails + FraisLivraison;
             }
@@ -605,7 +605,8 @@ public class CommandeViewModel : BaseViewModel
 
         await HttpClientService.ModifyCommande(commande, commande.Id);
 
-        Commande cmd = await HttpClientService.GetCommandById(commande.Id);
+        CommandeDTO commandeDTO = await HttpClientService.GetCommandById(commande.Id);
+        Commande cmd = commandeDTO.ToCommande();
 
         foreach (var ligneCommande in cmd.LignesCommande!)
         {

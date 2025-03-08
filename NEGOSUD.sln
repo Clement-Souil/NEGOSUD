@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiNegosud", "Test\ApiNegos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seeder", "Seeder\Seeder.csproj", "{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegosudWeb", "NegosudWeb\NegosudWeb.csproj", "{A5153099-7F40-4C4B-8C1D-56B4120F289A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegosudWebApp", "NegosudWebApp\NegosudWebApp.csproj", "{A497E5D0-E886-48EA-B980-DCB96291F49D}"
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5153099-7F40-4C4B-8C1D-56B4120F289A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5153099-7F40-4C4B-8C1D-56B4120F289A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5153099-7F40-4C4B-8C1D-56B4120F289A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5153099-7F40-4C4B-8C1D-56B4120F289A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A497E5D0-E886-48EA-B980-DCB96291F49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A497E5D0-E886-48EA-B980-DCB96291F49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A497E5D0-E886-48EA-B980-DCB96291F49D}.Release|Any CPU.ActiveCfg = Release|Any CPU

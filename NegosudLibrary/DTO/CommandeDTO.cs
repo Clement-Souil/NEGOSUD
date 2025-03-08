@@ -7,8 +7,8 @@ public class CommandeDTO
     public int Id { get; set; }
     public DateTime Date { get; set; }
     public int UserId { get; set; }
-    public string UserNom { get; set; } = string.Empty; 
-    public string UserAdresse { get; set; } = string.Empty; 
+    public string UserNom { get; set; } = string.Empty;
+    public string UserAdresse { get; set; } = string.Empty;
 
     public int StatutCommandeId { get; set; }
     public string StatutCommande { get; set; } = string.Empty;
@@ -18,5 +18,34 @@ public class CommandeDTO
 
     public bool IsClient { get; set; } = false;
 
-    public virtual List<LigneCommandeDTO>? LignesCommandes { get; set; } = new List<LigneCommandeDTO>();
+    public virtual List<LigneCommandeDTO>? LignesCommandes { get; set; } // Fixed property name
+
+    public string FormattedPrixTotal
+    {
+        get
+        {
+            string prefix = IsClient ? "+ " : "- ";
+            return $"{prefix}{PrixTotal:F2} €";
+        }
+    }
+
+    public Commande ToCommande()
+    {
+        return new Commande
+        {
+            Id = this.Id,
+            Date = this.Date,
+            UserId = this.UserId,
+            StatutCommandeId = this.StatutCommandeId,
+            FournisseurId = this.FournisseurId,
+            IsClient = this.IsClient,
+            LignesCommande = this.LignesCommandes?.Select(lc => new LigneCommande
+            {
+                Id = lc.Id,
+                Prix = lc.Prix,
+                Quantite = lc.Quantite,
+                ArticleId = lc.ArticleId
+            }).ToList() ?? new List<LigneCommande>()
+        };
+    }
 }

@@ -68,7 +68,7 @@
                 </Grid>
 
                 <!-- Liste des produits -->
-                <ItemsControl ItemsSource="{Binding CurrentCommande.LignesCommande}">
+                <ItemsControl ItemsSource="{Binding CurrentCommande.LignesCommandes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Gray" BorderThickness="0,0,0,1" Padding="5">
