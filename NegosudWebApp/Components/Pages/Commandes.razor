@@ -1,0 +1,137 @@
+﻿@page "/commandes"
+@using NegosudWebApp.Interfaces
+@using NegosudWebApp.Repositories
+@using NegosudWebApp.Services
+@using NegosudLibrary.DTO
+@inject CommandeRepository commandeRepository
+
+<PageTitle>Mes Commandes</PageTitle>
+
+<h1>Mes Commandes</h1>
+
+@if (erreurMessage != null)
+{
+    <p style="color: grey; text-align:center;">Erreur : @erreurMessage</p>
+}
+else if (FilteredCommandes == null || !FilteredCommandes.Any())
+{
+    <p style="text-align:center;">Aucune commande disponible.</p>
+}
+else
+{
+    <div class="commandes-table-container">
+        <table class="commandes-table">
+            <thead>
+                <tr>
+                    <!-- ✅ Ajout du numéro de commande en première colonne -->
+                    <th @onclick="() => SortTable(nameof(CommandeDTO.Id))"
+                        class="@(CurrentSortColumn == nameof(CommandeDTO.Id) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        N° Commande
+                    </th>
+                    <th @onclick="() => SortTable(nameof(CommandeDTO.Date))"
+                        class="@(CurrentSortColumn == nameof(CommandeDTO.Date) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Date
+                    </th>
+                    <th @onclick="() => SortTable(nameof(CommandeDTO.UserNom))"
+                        class="@(CurrentSortColumn == nameof(CommandeDTO.UserNom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Client
+                    </th>
+                    <th @onclick="() => SortTable(nameof(CommandeDTO.FournisseurNom))"
+                        class="@(CurrentSortColumn == nameof(CommandeDTO.FournisseurNom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Fournisseur
+                    </th>
+                    <th @onclick="() => SortTable(nameof(CommandeDTO.StatCommande))"
+                        class="@(CurrentSortColumn == nameof(CommandeDTO.StatCommande) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Statut
+                    </th>
+                    <th @onclick="() => SortTable(nameof(CommandeDTO.PrixTotal))"
+                        class="@(CurrentSortColumn == nameof(CommandeDTO.PrixTotal) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                        Prix Total (€)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var commande in FilteredCommandes)
+                {
+                    <tr>
+                        <!-- ✅ Lien sur le numéro de commande -->
+                        <td>
+                            <NavLink class="commande-link" href="@($"/detailcommande/{commande.Id}")">
+                                #@commande.Id
+                            </NavLink>
+                        </td>
+                        <td>@commande.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@commande.UserNom</td>
+                        <td>@commande.FournisseurNom</td>
+                        <td>@commande.StatCommande</td>
+                        <td>@commande.PrixTotal €</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<CommandeDTO>? CommandeList;       // Liste complète des commandes
+    private List<CommandeDTO>? FilteredCommandes;  // Liste filtrée
+    private string? erreurMessage;                 // Message d'erreur
+    private string? CurrentSortColumn { get; set; } // Colonne actuellement triée
+    private bool IsAscending { get; set; } = true; // Ordre de tri (croissant par défaut)
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Charger les commandes depuis l'API
+            CommandeList = await commandeRepository.GetAllAsync();
+
+            if (CommandeList == null || !CommandeList.Any())
+            {
+                erreurMessage = "Aucune commande disponible.";
+                return;
+            }
+
+            // Initialiser les commandes filtrées avec la liste complète
+            FilteredCommandes = new List<CommandeDTO>(CommandeList);
+        }
+        catch (Exception ex)
+        {
+            erreurMessage = $"Erreur lors de la récupération des commandes : {ex.Message}";
+            Console.WriteLine($"[Blazor ERROR] {ex}");
+        }
+    }
+
+    private void SortTable(string columnName)
+    {
+        // Inverser l'ordre de tri si la colonne est déjà triée
+        if (CurrentSortColumn == columnName)
+        {
+            IsAscending = !IsAscending;
+        }
+        else
+        {
+            CurrentSortColumn = columnName;
+            IsAscending = true;
+        }
+
+        // Appliquer le tri sur la colonne
+        FilteredCommandes = columnName switch
+        {
+            nameof(CommandeDTO.Id) => SortList(FilteredCommandes, c => c.Id),
+            nameof(CommandeDTO.Date) => SortList(FilteredCommandes, c => c.Date),
+            nameof(CommandeDTO.UserNom) => SortList(FilteredCommandes, c => c.UserNom),
+            nameof(CommandeDTO.FournisseurNom) => SortList(FilteredCommandes, c => c.FournisseurNom),
+            nameof(CommandeDTO.StatCommande) => SortList(FilteredCommandes, c => c.StatCommande),
+            nameof(CommandeDTO.PrixTotal) => SortList(FilteredCommandes, c => c.PrixTotal),
+            _ => FilteredCommandes
+        };
+    }
+
+    private List<T>? SortList<T>(List<T>? list, Func<T, object> keySelector)
+    {
+        return IsAscending
+            ? list?.OrderBy(keySelector).ToList()
+            : list?.OrderByDescending(keySelector).ToList();
+    }
+}

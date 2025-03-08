@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiNegosud", "Test\ApiNegos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seeder", "Seeder\Seeder.csproj", "{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegosudWebApp", "NegosudWebApp\NegosudWebApp.csproj", "{F1BA6671-B437-4F41-A23E-FCFE2ADDEDCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50EEC0F3-6E60-401B-A262-F3EA005EDE2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1BA6671-B437-4F41-A23E-FCFE2ADDEDCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BA6671-B437-4F41-A23E-FCFE2ADDEDCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1BA6671-B437-4F41-A23E-FCFE2ADDEDCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1BA6671-B437-4F41-A23E-FCFE2ADDEDCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

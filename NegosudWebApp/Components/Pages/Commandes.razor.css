@@ -1,0 +1,90 @@
+﻿/* Conteneur centré */
+.commandes-table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+/* Style du tableau */
+.commandes-table {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    /* En-tête du tableau */
+    .commandes-table th {
+        background-color: #f8f9fa;
+        color: #6c757d;
+        font-weight: 600;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 2px solid #dee2e6;
+        cursor: pointer; /* Curseur pour indiquer que c'est cliquable */
+        user-select: none; /* Empêche la sélection de texte */
+        position: relative; /* Nécessaire pour placer la flèche */
+    }
+
+        /* Ajouter une flèche pour la colonne triée */
+        .commandes-table th.sorted-asc::after {
+            content: "▲"; /* Flèche vers le haut pour tri croissant */
+            position: absolute;
+            right: 10px;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        .commandes-table th.sorted-desc::after {
+            content: "▼"; /* Flèche vers le bas pour tri décroissant */
+            position: absolute;
+            right: 10px;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+    /* Corps du tableau */
+    .commandes-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    /* Lignes alternées */
+    .commandes-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    /* Texte en gras pour le prix */
+    .commandes-table td:last-child {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    /* Survol des lignes */
+    .commandes-table tr:hover {
+        background-color: #e9ecef;
+    }
+
+/* ✅ Style pour les liens vers les détails des commandes */
+.commande-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+    .commande-link:hover {
+        text-decoration: underline;
+    }

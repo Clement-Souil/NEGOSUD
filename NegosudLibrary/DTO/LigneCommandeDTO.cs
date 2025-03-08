@@ -6,7 +6,6 @@ namespace NegosudLibrary.DTO;
 
 public class LigneCommandeDTO
 {
-
     public int Id { get; set; } = 0;
 
     public double Prix { get; set; } = double.NaN;

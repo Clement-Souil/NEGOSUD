@@ -1,0 +1,54 @@
+﻿@page "/panier"
+@using NegosudWebApp.Models
+@inject PanierModel PanierService
+
+<h1>Votre Panier</h1>
+
+@if (PanierService.Articles.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Quantité</th>
+                <th>Prix Unitaire</th>
+                <th>Prix Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in PanierService.Articles)
+            {
+                <tr>
+                    <td>@article.Nom</td>
+                    <td>@article.Quantite</td>
+                    <td>@($"{article.PrixUnitaire} €")</td>
+                    <td>@($"{article.PrixTotal} €")</td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="() => SupprimerArticle(article.Id)">Supprimer</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Total : @($"{PanierService.CalculerTotal()} €")</h3>
+    <button class="btn btn-success" @onclick="ValiderCommande">Commander</button>
+}
+else
+{
+    <p>Votre panier est vide.</p>
+}
+
+@code {
+    private void SupprimerArticle(int id)
+    {
+        PanierService.SupprimerArticle(id);
+    }
+
+    private void ValiderCommande()
+    {
+        PanierService.ViderPanier();
+        Console.WriteLine("Commande validée !");
+    }
+}

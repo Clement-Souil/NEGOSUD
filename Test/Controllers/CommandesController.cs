@@ -12,7 +12,7 @@ using NegosudLibrary.DTO;
 
 namespace ApiNegosud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CommandesController : ControllerBase
@@ -47,7 +47,8 @@ namespace ApiNegosud.Controllers
                     FournisseurNom = item.Fournisseur.NomDomaine,
                     PrixTotal = prixtotal,
                     UserNom = item.User.Nom + " " + item.User.Prenom,
-                    StatutCommande = item.StatutCommande.Statut,
+                    //StatutCommande = item.StatutCommande.Statut,
+                    StatCommande = item.StatutCommande.Statut,
 
                     //Rajout Clément pour gérer les etats de commande
                     IsClient = item.IsClient

@@ -1,0 +1,94 @@
+﻿@page "/detailcommande/{commandeId:int}"
+@using NegosudWebApp.Repositories
+@using NegosudWebApp.Services
+@using NegosudLibrary.DTO
+@inject CommandeRepository CommandeRepository
+
+<PageTitle>Détails de la commande</PageTitle>
+
+@if (commande == null)
+{
+    <p style="text-align:center; color: grey;">Chargement des détails de la commande...</p>
+}
+else
+{
+    <div class="commande-details-container">
+        <h2>DÉTAILS COMMANDE</h2>
+
+        <!-- Informations de la commande -->
+        <div class="commande-info">
+            <h3># @commande.Id</h3>
+            <p>@commande.Date.ToString("dd MMMM yyyy HH:mm")</p>
+        </div>
+
+        <!-- Adresse de l'utilisateur -->
+        <div class="commande-adresse">
+            <h4>Adresse d'expédition</h4>
+            @* <p>@commande.UserNom</p>
+            <p>@commande.UserAdresse</p> *@
+        </div>
+
+        <!-- Vérification des lignes de commande -->
+        @if (commande.LignesCommandes == null || !commande.LignesCommandes.Any())
+        {
+            <p style="color:red; text-align:center;">❌ Aucune ligne de commande trouvée.</p>
+        }
+        else
+        {
+            <!-- Liste des articles de la commande -->
+            <h4>Résumé</h4>
+            <div class="commande-lignes">
+                <table class="commande-table">
+                    <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ligne in commande.LignesCommandes)
+                        {
+                            <tr>
+                                <td>@(ligne.Article?.Nom ?? "Article inconnu")</td>
+                                <td>@(ligne.Article?.PrixVente.ToString("0.00") ?? "0.00") €</td>
+                                <td>x @(ligne.Quantite)</td>
+                                <td>@(ligne.Prix * ligne.Quantite) €</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <!-- Total de la commande -->
+        <div class="commande-total">
+            <p>Total : <strong>@commande.PrixTotal.ToString("0.00") €</strong></p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int commandeId { get; set; }
+    private CommandeDTO? commande;
+
+    protected override async Task OnInitializedAsync()
+    {
+        commande = await CommandeRepository.GetByIdAsync(commandeId);
+
+        // Debugging pour vérifier si les lignes sont bien chargées
+        if (commande?.LignesCommandes != null)
+        {
+            Console.WriteLine($"[DEBUG] Nombre de lignes de commande : {commande.LignesCommandes.Count}");
+            foreach (var ligne in commande.LignesCommandes)
+            {
+                Console.WriteLine($"[DEBUG] Article : {ligne.Article?.Nom ?? "NULL"}, Prix : {ligne.Article?.PrixVente ?? 0}, Quantité : {ligne.Quantite}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("[DEBUG] Aucune ligne de commande trouvée.");
+        }
+    }
+}

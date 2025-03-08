@@ -15,7 +15,7 @@ public class StatutCommande
     public int Id { get; set; }
 
     [Column("statut")]
-    public string Statut { get; set; }
+    public string? Statut { get; set; }
 
 
 

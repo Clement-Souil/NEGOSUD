@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NegosudLibrary.DAO;
 using NegosudLibrary.DBContext;
+using NegosudLibrary.DTO;
 
 namespace ApiNegosud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LigneCommandesController : ControllerBase
@@ -106,5 +107,51 @@ namespace ApiNegosud.Controllers
         {
             return _context.LigneCommandes.Any(e => e.Id == id);
         }
+
+        [HttpGet("byCommande/{commandeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<List<LigneCommandeDTO>> GetLignesCommandeByCommandeId(int commandeId)
+        {
+            var lignesCommande = await _context.LigneCommandes
+                .Where(lc => lc.CommandeId == commandeId)
+                .ToListAsync();
+
+            if (lignesCommande == null || !lignesCommande.Any())
+            {
+                return new List<LigneCommandeDTO>();
+            }
+
+            List<LigneCommandeDTO> lignesCommandeDTO = new List<LigneCommandeDTO>();
+
+
+            foreach (var ligne in lignesCommande)
+            {
+                var article = await _context.Articles
+                                .Include(c => c.Fournisseur)
+                                .Include(x => x.FamilleArticle)
+                                .FirstOrDefaultAsync(a => a.Id == ligne.ArticleId );
+                var dto = new LigneCommandeDTO
+                {
+                    Id = ligne.Id,
+                    Prix = ligne.Prix,
+                    Quantite = ligne.Quantite,
+                    ArticleId = ligne.ArticleId,
+                    Article = new ArticleDTO
+                    {
+                        Id = article.Id,
+                        Nom = article.Nom,
+                        PrixVente = article.PrixVente
+
+                    }
+                };
+
+                lignesCommandeDTO.Add(dto);
+            }
+
+            
+            return lignesCommandeDTO;
+        }
+
     }
 }

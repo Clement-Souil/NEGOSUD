@@ -1,0 +1,123 @@
+﻿h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+
+/*Conteneur de la barre de recherche */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Style de l'input de recherche */
+.search-input {
+    width: 300px;
+    padding: 10px 40px 10px 15px; /* Espacement pour le texte + icône */
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    outline: none;
+    position: relative;
+}
+
+/* Bouton avec image de recherche */
+.search-button {
+    width: 24px;
+    height: 20px;
+    background: url('/bootstrap/Logos/search.svg') no-repeat center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+
+
+/* Conteneur centré */
+.articles-table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+/* Style du tableau */
+.articles-table {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    /* En-tête du tableau */
+    .articles-table th {
+        background-color: #f8f9fa;
+        color: #6c757d;
+        font-weight: 600;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 2px solid #dee2e6;
+        cursor: pointer; /* Curseur pour indiquer que c'est cliquable */
+        user-select: none; /* Empêche la sélection de texte */
+        position: relative; /* Nécessaire pour placer la flèche */
+    }
+
+        /* Ajouter une flèche pour la colonne triée */
+        .articles-table th.sorted-asc::after {
+            content: "▲"; /* Flèche vers le haut pour tri croissant */
+            position: absolute;
+            right: 10px;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        .articles-table th.sorted-desc::after {
+            content: "▼"; /* Flèche vers le bas pour tri décroissant */
+            position: absolute;
+            right: 10px;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+    /* Corps du tableau */
+    .articles-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    /* Lignes alternées */
+    .articles-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    /* Texte en gras pour le prix */
+    .articles-table td:last-child {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    /* Survol des lignes */
+    .articles-table tr:hover {
+        background-color: #e9ecef;
+    }
+
+/* Pagination ou navigation en bas (si nécessaire) */
+.table-pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    padding: 10px;
+    color: #6c757d;
+    font-size: 14px;
+}

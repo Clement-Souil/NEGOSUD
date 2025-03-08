@@ -14,7 +14,7 @@ public class CommandeDTO
 
     public int StatutCommandeId { get; set; }
     
-    public string StatutCommande { get; set; } = string.Empty; 
+    public string StatCommande { get; set; } = string.Empty ;
 
     public int FournisseurId { get; set; }
 
@@ -31,7 +31,7 @@ public class CommandeDTO
     public bool IsClient { get; set; }
 
 
-public string FormattedPrixTotal
+    public string FormattedPrixTotal
     {
         get
         {
@@ -41,5 +41,25 @@ public string FormattedPrixTotal
             // On formate le prix avec 2 décimales et on ajoute le symbole €
             return $"{prefix}{PrixFinal:F2} €";
         }
+    }
+
+    public Commande ToCommande()
+    {
+        return new Commande
+        {
+            Id = this.Id,
+            Date = this.Date,
+            UserId = this.UserId,
+            StatutCommandeId = this.StatutCommandeId,
+            FournisseurId = this.FournisseurId,
+            IsClient = this.IsClient,
+            LignesCommande = this.LignesCommandes?.Select(lc => new LigneCommande
+            {
+                Id = lc.Id,
+                Prix = lc.Prix,
+                Quantite = lc.Quantite,
+                ArticleId = lc.ArticleId
+            }).ToList() ?? new List<LigneCommande>()
+        };
     }
 }
