@@ -1,4 +1,5 @@
-﻿using NegosudLibrary.DTO;
+﻿using Blazored.LocalStorage;
+using NegosudLibrary.DTO;
 using NegosudWebApp.Components;
 using NegosudWebApp.Interfaces;
 using NegosudWebApp.Models;
@@ -23,10 +24,13 @@ builder.Services.AddSingleton(sp => new HttpClient(handler)
     BaseAddress = new Uri("https://localhost:7247/") // Assurez-vous que cette URL correspond bien à votre API
 });
 
+builder.Services.AddBlazoredLocalStorage();
+
 
 builder.Services.AddServerSideBlazor();
 // Ajouter les services nécessaires
 builder.Services.AddSingleton<HttpClientService>();
+builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<PanierModel>();
 //builder.Services.AddScoped<IRepository<CommandeDTO>, CommandeRepository>();
 builder.Services.AddScoped<CommandeRepository>();

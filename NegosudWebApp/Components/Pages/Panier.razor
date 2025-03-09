@@ -1,10 +1,12 @@
 ﻿@page "/panier"
 @using NegosudWebApp.Models
-@inject PanierModel PanierService
+@using NegosudWebApp.Services
+@inject ShoppingCartService CartService
+
 
 <h1>Votre Panier</h1>
 
-@if (PanierService.Articles.Any())
+@if (CartService.Cart.Items.Any())
 {
     <table class="table">
         <thead>
@@ -17,23 +19,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var article in PanierService.Articles)
+            @foreach (var article in CartService.Cart.Items)
             {
                 <tr>
-                    <td>@article.Nom</td>
-                    <td>@article.Quantite</td>
-                    <td>@($"{article.PrixUnitaire} €")</td>
-                    <td>@($"{article.PrixTotal} €")</td>
+                    <td>@article.ProductName</td>
+                    <td>@article.Quantity</td>
+                    <td>@($"{article.Price} €")</td>
+                    <td>@($"{article.Price * article.Quantity} €")</td>
                     <td>
-                        <button class="btn btn-danger" @onclick="() => SupprimerArticle(article.Id)">Supprimer</button>
+                        <button class="btn btn-danger">Supprimer</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <h3>Total : @($"{PanierService.CalculerTotal()} €")</h3>
-    <button class="btn btn-success" @onclick="ValiderCommande">Commander</button>
+    <h3>Total : @($"{CartService.Cart.TotalPrice} €")</h3>
+    <button class="btn btn-success">Commander</button>
 }
 else
 {
@@ -41,14 +43,45 @@ else
 }
 
 @code {
-    private void SupprimerArticle(int id)
+
+    private bool _isLoaded = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        PanierService.SupprimerArticle(id);
+        if (firstRender)
+        {
+            Console.WriteLine("Chargement du panier...");
+            await CartService.LoadCartAsync();
+            _isLoaded = true;
+            StateHasChanged(); // 🔄 Force un nouveau rendu après chargement des données
+
+            // Ajout d'éléments de test UNIQUEMENT si le panier est vide
+            if (!CartService.Cart.Items.Any())
+            {
+                var cartItem1 = new CartItem
+                    {
+                        ProductId = 1,
+                        ProductName = "Gros et Petit Manseng",
+                        Price = 7,
+                        Quantity = 3
+                    };
+
+                var cartItem2 = new CartItem
+                    {
+                        ProductId = 10,
+                        ProductName = "Grand Vintage Rosé",
+                        Price = 9.5M,
+                        Quantity = 2
+                    };
+
+                await CartService.AddToCartAsync(cartItem1);
+                await CartService.AddToCartAsync(cartItem2);
+                await CartService.SaveCartAsync();
+
+                Console.WriteLine("Articles ajoutés au panier !");
+            }
+        }
     }
 
-    private void ValiderCommande()
-    {
-        PanierService.ViderPanier();
-        Console.WriteLine("Commande validée !");
-    }
+
 }

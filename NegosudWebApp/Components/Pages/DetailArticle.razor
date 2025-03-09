@@ -4,52 +4,54 @@
 @using NegosudWebApp.Models 
 @inject HttpClientService ArticlesService
 @inject PanierModel Panier
+@inject ShoppingCartService CartService
+
 
 <PageTitle>Détail article</PageTitle>
 
 @if (erreurMessage != null)
 {
-        <p style="color: red; text-align:center;">Erreur : @erreurMessage</p>
+    <p style="color: red; text-align:center;">Erreur : @erreurMessage</p>
 }
 else if (article == null)
 {
-        <p style="text-align:center;">Chargement des informations de l'article...</p>
+    <p style="text-align:center;">Chargement des informations de l'article...</p>
 }
 else
 {
-        <div class="article-detail-container">
-            <!-- Image à gauche -->
-            <div class="article-image">
-                <img src="bootstrap/PhotosArticles/domaine-uby-gros-petit-manseng-gascogne.png" alt="@article.Nom" class="article-image" />
-            </div>
-
-            <!-- Détails à droite -->
-            <div class="article-details">
-                <h2>@article.Nom (@article.Annee)</h2>
-                <p class="article-type"><strong>Type :</strong> @article.Famille</p>
-                <p><strong>Degré d'alcool :</strong> @article.Degre%</p>  
-                <p><strong>Volume :</strong> @article.Volume L</p>
-                <p><strong>Quantité disponible :</strong> @article.Quantite</p>
-
-                <!-- Sélection quantité -->
-                <div class="quantity-selector">
-                    <label for="quantity">Quantité :</label>
-                    <input type="number" id="quantity" min="1" @bind="quantiteSelectionnee" />
-                </div>
-
-                <!-- Prix -->
-                <p class="article-price"><strong>Prix :</strong> @($"{prixTotal} €")</p>
-
-                <!-- Bouton ajouter au panier -->
-                <button class="add-to-cart" @onclick="AjouterAuPanier">Ajouter au panier</button>
-            </div>
+    <div class="article-detail-container">
+        <!-- Image à gauche -->
+        <div class="article-image">
+            <img src="bootstrap/PhotosArticles/domaine-uby-gros-petit-manseng-gascogne.png" alt="@article.Nom" class="article-image" />
         </div>
 
-        <!-- Description en bas -->
-        <div class="article-description">
-            <h3>Description</h3>
-            <p>@article.Description</p>
+        <!-- Détails à droite -->
+        <div class="article-details">
+            <h2>@article.Nom (@article.Annee)</h2>
+            <p class="article-type"><strong>Type :</strong> @article.Famille</p>
+            <p><strong>Degré d'alcool :</strong> @article.Degre%</p>  
+            <p><strong>Volume :</strong> @article.Volume L</p>
+            <p><strong>Quantité disponible :</strong> @article.Quantite</p>
+
+            <!-- Sélection quantité -->
+            <div class="quantity-selector">
+                <label for="quantity">Quantité :</label>
+                <input type="number" id="quantity" min="1" @bind="quantiteSelectionnee" />
+            </div>
+
+            <!-- Prix -->
+            <p class="article-price"><strong>Prix :</strong> @($"{prixTotal} €")</p>
+
+            <!-- Bouton ajouter au panier -->
+            <button class="add-to-cart" @onclick="AjouterAuPanier">Ajouter au panier</button>
         </div>
+    </div>
+
+    <!-- Description en bas -->
+    <div class="article-description">
+        <h3>Description</h3>
+        <p>@article.Description</p>
+    </div>
 }
 
 @code {
@@ -58,6 +60,8 @@ else
     private string? erreurMessage;
     private int quantiteSelectionnee = 1;
     private decimal prixTotal => (decimal)(article?.PrixVente ?? 0) * quantiteSelectionnee;
+    private bool _isLoaded = false;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -77,7 +81,17 @@ else
         }
     }
 
-    private void AjouterAuPanier()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) // ✅ Charge le LocalStorage seulement une fois
+        {
+            await CartService.LoadCartAsync();
+            _isLoaded = true;
+            StateHasChanged(); // 🔄 Force le rendu après récupération des données
+        }
+    }
+
+    private async void AjouterAuPanier()
     {
         if (article == null)
         {
@@ -85,17 +99,15 @@ else
             return;
         }
 
-        // Création d'un nouvel article pour le panier
-        var articlePanier = new ArticlePanier
-            {
-                Id = article.Id,
-                Nom = article.Nom,
-                PrixUnitaire = (decimal)article.PrixVente,
-                Quantite = quantiteSelectionnee
-            };
+        var CartItem = new CartItem
+        {
+            ProductId = article.Id,
+            ProductName = article.Nom,
+            Price = (decimal)article.PrixVente,
+            Quantity = quantiteSelectionnee
+        };
 
-        // Ajouter l'article au panier
-        Panier.AjouterArticle(articlePanier);
-        Console.WriteLine($"✅ {quantiteSelectionnee} x {article.Nom} ajouté(s) au panier.");
+        await CartService.AddToCartAsync(CartItem);
+        await CartService.SaveCartAsync();
     }
 }
