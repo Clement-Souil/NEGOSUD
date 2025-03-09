@@ -52,11 +52,12 @@ else
                         {
                             <tr>
                                 <td>@(ligne.Article?.Nom ?? "Article inconnu")</td>
-                                <td>@(ligne.Article?.PrixVente.ToString("0.00") ?? "0.00") €</td>
+                                <td>@(ligne.Prix.ToString("0.00") ?? "0.00") €</td>
                                 <td>x @(ligne.Quantite)</td>
                                 <td>@(ligne.Prix * ligne.Quantite) €</td>
                             </tr>
                         }
+
                     </tbody>
                 </table>
             </div>

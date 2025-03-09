@@ -149,7 +149,6 @@ namespace ApiNegosud.Controllers
                 lignesCommandeDTO.Add(dto);
             }
 
-            
             return lignesCommandeDTO;
         }
 

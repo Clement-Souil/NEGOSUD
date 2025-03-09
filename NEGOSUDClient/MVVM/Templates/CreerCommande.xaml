@@ -91,7 +91,8 @@
                 DisplayMemberPath="Nom" />
 
             <TextBlock Grid.Row="1" Grid.Column="2" Text="Quantité" FontSize="14" FontWeight="Bold" Margin="100,10,100,10" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <TextBox Text="{Binding QuantiteInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1" Grid.Column="2" Margin="1,30,1,0" Height="38" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" />
+            <TextBox Text="{Binding QuantiteInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=0}"
+            Grid.Row="1" Grid.Column="2" Margin="1,30,1,0" Height="38" VerticalAlignment="Top" Background="#F4F4F4" BorderThickness="1" BorderBrush="#CCCCCC" />
 
             <Button Grid.Row="1" Grid.Column="3" Margin="25,30,25,10" Content="Ajouter" Background="#FFCDD2" Height="40" Grid.ColumnSpan="2" Command="{Binding AjouterArticleCommand}" />
         </Grid>

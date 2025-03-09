@@ -87,6 +87,11 @@ public class CommandeViewModel : BaseViewModel
                 PrixTotalDetails = CurrentCommande.LignesCommande.Sum(l => l.Prix);
                 TaxesDetails = PrixTotalDetails * TAUX_TVA;
                 TotalCommandeDetails = PrixTotalDetails + TaxesDetails + FraisLivraison;
+
+                if (CurrentCommande.IsClient)
+                    PrixAffiche = true;
+                else
+                    PrixAffiche = false;
             }
             
             OnPropertyChanged(nameof(CurrentCommande));
@@ -243,6 +248,18 @@ public class CommandeViewModel : BaseViewModel
             }
         }
     }
+
+    private bool _prixAffiche{ get; set; }
+    public bool PrixAffiche
+    {
+        get { return _prixAffiche; }
+        set {
+            _prixAffiche = value;
+            OnPropertyChanged(nameof(PrixAffiche));
+        }
+
+    }
+
 
 
     public ObservableCollection<UserDTO> SelectedUserClient

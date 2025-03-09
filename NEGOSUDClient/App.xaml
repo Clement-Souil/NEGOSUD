@@ -52,8 +52,11 @@
                 <ResourceDictionary Source="assets/Ressources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
+        
 
 
 
     </Application.Resources>
+
 </Application>

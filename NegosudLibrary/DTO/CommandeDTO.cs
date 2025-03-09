@@ -12,6 +12,8 @@ public class CommandeDTO
 
     public string UserNom { get; set; } = string.Empty; // Nom de l'utilisateur
 
+    public string UserAdresse { get; set; } = string.Empty;
+
     public int StatutCommandeId { get; set; }
     
     public string StatCommande { get; set; } = string.Empty ;

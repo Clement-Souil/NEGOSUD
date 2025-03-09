@@ -22,6 +22,7 @@ public class CommandeItemViewModel : BaseViewModel
     public ICommand ClickVoirDetailsCommande { get; set; }
     public ICommand RecuCommande { get; set; }
 
+
     public event EventHandler supprimer;
     public event EventHandler voirDetails;
     public event EventHandler ValidateCommandRequested;
