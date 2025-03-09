@@ -1,6 +1,8 @@
-﻿@page "/articles"
+﻿
+@page "/articles"
 @using NegosudWebApp.Services
 @using NegosudLibrary.DTO
+@using System.Diagnostics
 @inject HttpClientService ArticlesService
 
 <PageTitle>Nos produits</PageTitle>
@@ -9,7 +11,7 @@
 
 <!-- Barre de recherche avec un bouton -->
 <div class="search-container">
-    <form @onsubmit="OnSearch">
+    <form onsubmit="OnSearch" PrevenDefault="true">
         <input type="text" @bind="SearchString" placeholder="Recherchez..." class="search-input" />
         <button type="submit" class="search-button"></button>
     </form>
@@ -30,31 +32,31 @@ else
             <thead>
                 <tr>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.Nom))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.Nom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.Nom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Nom
                     </th>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.Fournisseur))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.Fournisseur) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.Fournisseur) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Domaine
                     </th>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.Famille))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.Famille) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.Famille) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Type
                     </th>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.Annee))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.Annee) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.Annee) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Année
                     </th>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.Volume))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.Volume) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.Volume) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Volume
                     </th>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.Quantite))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.Quantite) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.Quantite) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Quantité
                     </th>
                     <th @onclick="() => SortTable(nameof(ArticleDTO.PrixVente))" 
-                        class="@(CurrentSortColumn == nameof(ArticleDTO.PrixVente) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(ArticleDTO.PrixVente) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Prix Vente (€)
                     </th>
                 </tr>
@@ -64,9 +66,9 @@ else
                 {
                     <tr>
                         <td>
-                <NavLink class="article-link" href="@($"/detailarticle/{article.Id}")">
-                    @article.Nom
-                </NavLink>
+                            <NavLink class="article-link" href="@($"/detailarticle/{article.Id}")">
+                                @article.Nom
+                            </NavLink>
                         </td>
                         <td>@article.Fournisseur</td>
                         <td>@article.Famille</td>
@@ -93,8 +95,9 @@ else
     {
         try
         {
-            // Charger les articles depuis l'API
             ArticleList = await ArticlesService.GetArticlesAsync();
+
+            Debug.WriteLine($"Nombre total d'articles récupérés : {ArticleList?.Count}");
 
             if (ArticleList == null || !ArticleList.Any())
             {
@@ -102,34 +105,39 @@ else
                 return;
             }
 
-            // Initialiser les articles filtrés avec la liste complète
             FilteredArticles = new List<ArticleDTO>(ArticleList);
+            Debug.WriteLine($"Nombre d'articles dans FilteredArticles : {FilteredArticles.Count}");
         }
         catch (Exception ex)
         {
             erreurMessage = $"Erreur lors de la récupération des articles : {ex.Message}";
-            Console.WriteLine($"[Blazor ERROR] {ex}");
+            Debug.WriteLine($"[Blazor ERROR] {ex}");
         }
     }
 
-    private void OnSearch()
+    private void OnSearch(ChangeEventArgs e)
     {
-        // Filtrer les articles en fonction de la chaîne de recherche
+        SearchString = e.Value?.ToString();
+
+        Console.WriteLine($"Recherche déclenchée avec : {SearchString}");
+
         if (string.IsNullOrWhiteSpace(SearchString))
         {
-            // Si aucun texte de recherche, afficher tous les articles
             FilteredArticles = new List<ArticleDTO>(ArticleList);
         }
         else
         {
-            // Sinon, filtrer sur le Nom ou le Fournisseur
-            FilteredArticles = ArticleList
-                ?.Where(a => (a.Nom?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false)
+            FilteredArticles = ArticleList?
+                .Where(a => (a.Nom?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false)
                           || (a.Fournisseur?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false)
-						    || (a.Famille?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false))
+                          || (a.Famille?.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ?? false))
                 .ToList();
         }
+
+        Console.WriteLine($"Nombre d'articles après filtrage : {FilteredArticles?.Count}");
+        StateHasChanged();
     }
+
 
     private void SortTable(string columnName)
     {
@@ -156,12 +164,17 @@ else
             nameof(ArticleDTO.PrixVente) => SortList(FilteredArticles, a => a.PrixVente),
             _ => FilteredArticles
         };
+
+        StateHasChanged(); // Rafraîchit l'affichage après le tri
+
     }
 
-    private List<T>? SortList<T>(List<T>? list, Func<T, object> keySelector)
+    private List<T> SortList<T, TKey>(List<T> list, Func<T, TKey> keySelector) where TKey : IComparable
     {
         return IsAscending
-            ? list?.OrderBy(keySelector).ToList()
-            : list?.OrderByDescending(keySelector).ToList();
+            ? list.OrderBy(keySelector).ToList()
+            : list.OrderByDescending(keySelector).ToList();
     }
+
+
 }

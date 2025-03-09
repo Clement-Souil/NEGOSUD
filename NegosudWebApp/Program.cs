@@ -26,6 +26,8 @@ builder.Services.AddScoped<PanierModel>();
 //builder.Services.AddScoped<IRepository<CommandeDTO>, CommandeRepository>();
 builder.Services.AddScoped<CommandeRepository>();
 builder.Services.AddScoped<LigneCommandRepository>();
+builder.Services.AddScoped<UserService>();
+
 
 var app = builder.Build();
 

@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using Microsoft.Identity.Client;
+﻿
 using NegosudLibrary.DAO;
 using NegosudLibrary.DTO;
 using NegosudWebApp.Interfaces;
