@@ -7,8 +7,11 @@ using NegosudWebApp.Services;
 using System.Net;
 using System.Net.Http;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 var cookieContainer = new CookieContainer();
+
 var handler = new HttpClientHandler { CookieContainer = cookieContainer };
 // Ajouter Razor Components pour Blazor
 builder.Services.AddRazorComponents()
@@ -20,6 +23,8 @@ builder.Services.AddSingleton(sp => new HttpClient(handler)
     BaseAddress = new Uri("https://localhost:7247/") // Assurez-vous que cette URL correspond bien à votre API
 });
 
+
+builder.Services.AddServerSideBlazor();
 // Ajouter les services nécessaires
 builder.Services.AddSingleton<HttpClientService>();
 builder.Services.AddScoped<PanierModel>();
@@ -42,6 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+app.MapBlazorHub();
 // Mapper les Razor Components
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

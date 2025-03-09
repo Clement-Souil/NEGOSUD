@@ -73,7 +73,7 @@ else
 @code {
     [Parameter] public int commandeId { get; set; }
     private CommandeDTO? commande;
-    private double PrixTotalCommande { get; set; } = 0;
+    public double PrixTotalCommande { get; set; } = 0;
     protected override async Task OnInitializedAsync()
     {
         commande = await CommandeRepository.GetByIdAsync(commandeId);

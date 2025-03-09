@@ -1,8 +1,19 @@
-﻿@page "/moncompte"
+﻿
+
+@page "/moncompte"
 @using NegosudWebApp.Services
 @using NegosudLibrary.DTO
 @using NegosudWebApp.Models
-@inject HttpClientService UserService
+@inject UserService UserService
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject IJSRuntime JSRuntime
+
+
 
 
 
@@ -19,8 +30,8 @@
     <!-- Connexion -->
     <div class="login-form">
         <h2>Déjà inscrit ?</h2>
-        <div class="form-container">
-            <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+        <div class="form-container" >
+            <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" FormName="loginForm">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
@@ -34,6 +45,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Connexion</button>
             </EditForm>
+
         </div>
     </div>
 
@@ -41,7 +53,7 @@
     <div class="register-form">
         <h2>Inscrivez-vous !</h2>
         <div class="form-container">
-            <EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
+            <EditForm Model="@registerModel" OnValidSubmit="HandleRegister" FormName="registerForm">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
@@ -92,8 +104,8 @@
 </div>
 
 @code {
-    private ConnexionModel.LoginModel loginModel = new();
-    private ConnexionModel.RegisterModel registerModel = new();
+    private ConnexionModel.LoginModel loginModel {get; set; } = new ConnexionModel.LoginModel();
+    private ConnexionModel.RegisterModel registerModel { get; set; } = new ConnexionModel.RegisterModel();
     private string? errorMessage;
 
     private async Task HandleLogin()

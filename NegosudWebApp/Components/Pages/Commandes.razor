@@ -25,27 +25,27 @@ else
                 <tr>
                     <!-- ✅ Ajout du numéro de commande en première colonne -->
                     <th @onclick="() => SortTable(nameof(CommandeDTO.Id))"
-                        class="@(CurrentSortColumn == nameof(CommandeDTO.Id) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(CommandeDTO.Id) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         N° Commande
                     </th>
                     <th @onclick="() => SortTable(nameof(CommandeDTO.Date))"
-                        class="@(CurrentSortColumn == nameof(CommandeDTO.Date) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(CommandeDTO.Date) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Date
                     </th>
                     <th @onclick="() => SortTable(nameof(CommandeDTO.UserNom))"
-                        class="@(CurrentSortColumn == nameof(CommandeDTO.UserNom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(CommandeDTO.UserNom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Client
                     </th>
                     <th @onclick="() => SortTable(nameof(CommandeDTO.FournisseurNom))"
-                        class="@(CurrentSortColumn == nameof(CommandeDTO.FournisseurNom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(CommandeDTO.FournisseurNom) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Fournisseur
                     </th>
                     <th @onclick="() => SortTable(nameof(CommandeDTO.StatCommande))"
-                        class="@(CurrentSortColumn == nameof(CommandeDTO.StatCommande) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(CommandeDTO.StatCommande) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Statut
                     </th>
                     <th @onclick="() => SortTable(nameof(CommandeDTO.PrixTotal))"
-                        class="@(CurrentSortColumn == nameof(CommandeDTO.PrixTotal) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
+                    class="@(CurrentSortColumn == nameof(CommandeDTO.PrixTotal) ? (IsAscending ? "sorted-asc" : "sorted-desc") : null)">
                         Prix Total (€)
                     </th>
                 </tr>
@@ -53,8 +53,11 @@ else
             <tbody>
                 @foreach (var commande in FilteredCommandes)
                 {
-                    <tr>
-                        <!-- ✅ Lien sur le numéro de commande -->
+
+                    if (commande.IsClient)
+                    {
+                        <tr>
+                            <!-- ✅ Lien sur le numéro de commande -->
                         <td>
                             <NavLink class="commande-link" href="@($"/detailcommande/{commande.Id}")">
                                 #@commande.Id
@@ -64,8 +67,9 @@ else
                         <td>@commande.UserNom</td>
                         <td>@commande.FournisseurNom</td>
                         <td>@commande.StatCommande</td>
-                        <td>@commande.PrixTotal €</td>
+                        <td>@((commande.PrixTotal * 1.2 + 6).ToString("0.00")) €</td>
                     </tr>
+                    }
                 }
             </tbody>
         </table>
