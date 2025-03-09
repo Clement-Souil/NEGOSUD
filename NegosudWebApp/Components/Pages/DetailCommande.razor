@@ -24,8 +24,8 @@ else
         <!-- Adresse de l'utilisateur -->
         <div class="commande-adresse">
             <h4>Adresse d'expédition</h4>
-            @* <p>@commande.UserNom</p>
-            <p>@commande.UserAdresse</p> *@
+            <p>@commande.UserNom</p>
+            <p>@commande.UserAdresse</p> 
         </div>
 
         <!-- Vérification des lignes de commande -->
@@ -52,9 +52,9 @@ else
                         {
                             <tr>
                                 <td>@(ligne.Article?.Nom ?? "Article inconnu")</td>
-                                <td>@(ligne.Prix.ToString("0.00") ?? "0.00") €</td>
+                                <td>@(ligne.Article?.PrixVente.ToString("0.00") ?? "0.00") €</td>
                                 <td>x @(ligne.Quantite)</td>
-                                <td>@(ligne.Prix * ligne.Quantite) €</td>
+                                <td>@(ligne.Article?.PrixVente * ligne.Quantite) €</td>
                             </tr>
                         }
 
@@ -65,7 +65,7 @@ else
 
         <!-- Total de la commande -->
         <div class="commande-total">
-            <p>Total : <strong>@commande.PrixTotal.ToString("0.00") €</strong></p>
+            <p>Total : <strong>@PrixTotalCommande.ToString("0.00") €</strong></p>
         </div>
     </div>
 }
@@ -73,10 +73,17 @@ else
 @code {
     [Parameter] public int commandeId { get; set; }
     private CommandeDTO? commande;
-
+    private double PrixTotalCommande { get; set; } = 0;
     protected override async Task OnInitializedAsync()
     {
         commande = await CommandeRepository.GetByIdAsync(commandeId);
+
+        foreach ( var LigneCommande in commande.LignesCommandes)
+        {
+            PrixTotalCommande += LigneCommande.Article.PrixVente * LigneCommande.Quantite * 1.2;
+            PrixTotalCommande += 6;
+        }
+
 
         // Debugging pour vérifier si les lignes sont bien chargées
         if (commande?.LignesCommandes != null)
